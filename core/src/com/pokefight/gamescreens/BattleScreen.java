@@ -5,23 +5,32 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.pokejava.Sprite;
 
-public class menuScreen implements Screen{
+public class BattleScreen implements Screen{
 	SpriteBatch batch = new SpriteBatch();
-	Texture img = new Texture("background.jpg");
+	Sprite charmander = new Sprite(5);
+	Sprite charizard = new Sprite(2);
+	Texture charmPoke = new Texture("." + charmander.getImage());
+	Texture chariPoke = new Texture("." + charizard.getImage());
+	Texture battlefield = new Texture("battlefields/1.png");
 	
+	public BattleScreen(){
+
+		
+	}
 	@Override
 	public void show() {
-
 	}
-	
-	
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(10/255.0f, 15/255.0f, 230/255.0f,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(battlefield, 0, 44);
+		batch.draw(charmPoke, 135, 70);
+		batch.draw(chariPoke, 6, 20);
 		batch.end();
 	}
 
@@ -44,5 +53,5 @@ public class menuScreen implements Screen{
 	@Override
 	public void dispose() {
 	}
-	
+
 }

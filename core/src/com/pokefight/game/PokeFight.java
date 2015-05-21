@@ -1,14 +1,15 @@
 package com.pokefight.game;
 
 import com.badlogic.gdx.Game;
-import com.pokefight.gamescreens.battleScreen;
-import com.pokefight.gamescreens.menuScreen;
+import com.pokefight.gamescreens.BattleScreen;
+import com.pokefight.gamescreens.MenuScreen;
 
 public class PokeFight extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new battleScreen());
+		setScreen(new MenuScreen());
+
 	}
 	
 }
