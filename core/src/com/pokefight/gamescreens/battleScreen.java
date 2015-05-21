@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
-public class battleScreen implements Screen{
+public class BattleScreen implements Screen{
 
-	public battleScreen(){
+	public BattleScreen(){
 		
 	}
 	@Override
