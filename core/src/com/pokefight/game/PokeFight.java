@@ -8,7 +8,7 @@ public class PokeFight extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new menuScreen());
+		setScreen(new battleScreen());
 	}
 	
 }
