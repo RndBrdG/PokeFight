@@ -37,6 +37,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+.classpath
 local.properties
 .settings/
 .loadpath
@@ -61,3 +62,7 @@ build/
 ## OS Specific
 .DS_Store
 /bin/
+
+desktop/.classpath
+
+core/.classpath
