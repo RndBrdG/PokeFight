@@ -32,7 +32,7 @@ public class MenuScreen implements Screen{
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		Pixmap pixmap = new Pixmap(200, 100, Format.RGBA8888);
+		Pixmap pixmap = new Pixmap(Gdx.app.getGraphics().getWidth() / 2 - 100, Gdx.app.getGraphics().getHeight() / 4, Format.RGBA8888);
 		pixmap.setColor(Color.rgba8888(1, 1, 1, (float) 0.1));
 		pixmap.fill();
 
@@ -55,11 +55,11 @@ public class MenuScreen implements Screen{
 
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
 		final TextButton playButton=new TextButton("Play",textButtonStyle);
-		playButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 2 -100);
+		playButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 2 + 20);
 		stage.addActor(playButton);
 		
 		final TextButton exitButton = new TextButton("Exit",textButtonStyle);
-		exitButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 2 -220);
+		exitButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 4);
 		stage.addActor(exitButton);
 		
 		playButton.addListener( new ClickListener() {              

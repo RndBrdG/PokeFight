@@ -30,8 +30,6 @@ out/
 com_crashlytics_export_strings.xml
 
 ## Eclipse
-.classpath
-.project
 .metadata
 **/bin/
 tmp/
@@ -39,6 +37,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+.classpath
 local.properties
 .settings/
 .loadpath
@@ -62,3 +61,8 @@ build/
 
 ## OS Specific
 .DS_Store
+/bin/
+
+desktop/.classpath
+
+core/.classpath
