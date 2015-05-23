@@ -1,7 +1,6 @@
 package com.pokefight.game;
 
 import com.badlogic.gdx.Game;
-import com.pokefight.gamescreens.BattleScreen;
 import com.pokefight.gamescreens.MenuScreen;
 
 public class PokeFight extends Game {
