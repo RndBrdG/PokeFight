@@ -38,19 +38,19 @@ public class MenuScreen implements Screen{
         Gdx.input.setInputProcessor(stages);
         font = new BitmapFont();
         skins = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("test-me!.pack"));
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("buttons.pack"));
         skins.addRegions(buttonAtlas);
         textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = font;
-        textButtonStyle.up = skins.getDrawable("test01");
-        textButtonStyle.down = skins.getDrawable("test02");
-        textButtonStyle.checked = skins.getDrawable("test03");
-		textButtonStyle.over = skins.getDrawable("test02");
+        textButtonStyle.up = skins.getDrawable("BALL");
+        textButtonStyle.down = skins.getDrawable("BALL");
+        textButtonStyle.checked = skins.getDrawable("BALL");
+		textButtonStyle.over = skins.getDrawable("BALL");
 		
 		skin = new Skin();
 		stage = new Stage();
 		batch = new SpriteBatch();
-		img = new Texture("background.jpg");
+		img = new Texture("pokefightback.png");
 		
 		Gdx.input.setInputProcessor(stage);
 
@@ -67,15 +67,15 @@ public class MenuScreen implements Screen{
 
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
 		final TextButton playButton=new TextButton("Play",textButtonStyle);
-		playButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 2 + 20);
-		playButton.setHeight(100);
-		playButton.setWidth(100);
+		playButton.setPosition(10, 5);
+		playButton.setHeight(40);
+		playButton.setWidth(40);
 		stage.addActor(playButton);
 		
 		final TextButton exitButton = new TextButton("Exit",textButtonStyle);
-		exitButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 4);
-		exitButton.setHeight(100);
-		exitButton.setWidth(100);
+		exitButton.setPosition(60,5);
+		exitButton.setHeight(40);
+		exitButton.setWidth(40);
 		stage.addActor(exitButton);
 		
 		playButton.addListener( new ClickListener() {              
@@ -109,7 +109,7 @@ public class MenuScreen implements Screen{
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(img, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
 		batch.end();
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
