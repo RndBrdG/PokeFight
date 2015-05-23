@@ -2,16 +2,20 @@ package com.pokefight.gameplay;
 
 import java.util.ArrayList;
 
-public class Pokemon {
+import com.pokejava.Ability;
+
+public class Battle_Pokemon {
+	private int id;
 	private String name;
 	private int level;
 	private int experience;
 	private int attack;
 	private int defense;
 	private int hp;
-	private ArrayList<String> moves;
+	private ArrayList<Ability> moves;
 	
-	public Pokemon(String name, int level, int experience, int attack, int defense, int hp, ArrayList<String> moves){
+	public Battle_Pokemon(int id, String name, int level, int experience, int attack, int defense, int hp, ArrayList<Ability> moves){
+		this.id = id;
 		this.name = name;
 		this.level = level;
 		this.experience = experience;
@@ -21,6 +25,10 @@ public class Pokemon {
 		this.moves = moves;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
 	public String getName(){
 		return this.name;
 	}
@@ -45,10 +53,14 @@ public class Pokemon {
 		return hp;
 	}
 
-	public ArrayList<String> getMoves() {
+	public ArrayList<Ability> getMoves() {
 		return moves;
 	}
-
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -73,7 +85,7 @@ public class Pokemon {
 		this.hp = hp;
 	}
 
-	public void setMoves(ArrayList<String> moves) {
+	public void setMoves(ArrayList<Ability> moves) {
 		this.moves = moves;
 	}
 	

@@ -38,6 +38,7 @@ tmp/
 *.swp
 *~.nib
 .classpath
+*/.classpath
 local.properties
 .settings/
 .loadpath
@@ -63,6 +64,6 @@ build/
 .DS_Store
 /bin/
 
-desktop/.classpath
-
-core/.classpath
+android\.classpath
+desktop\.classpath
+core\.classpath
