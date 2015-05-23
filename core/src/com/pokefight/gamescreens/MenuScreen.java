@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -24,42 +25,58 @@ public class MenuScreen implements Screen{
 	private Skin skin;
 	private SpriteBatch batch;
 	
+	   Stage stages;
+	    TextButton button;
+	    TextButtonStyle textButtonStyle;
+	    BitmapFont font;
+	    Skin skins;
+	    TextureAtlas buttonAtlas;
+
+	
 	public MenuScreen(){
+		
+	 	stages = new Stage();
+        Gdx.input.setInputProcessor(stages);
+        font = new BitmapFont();
+        skins = new Skin();
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("test-me!.pack"));
+        skins.addRegions(buttonAtlas);
+        textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        textButtonStyle.up = skins.getDrawable("test01");
+        textButtonStyle.down = skins.getDrawable("test02");
+        textButtonStyle.checked = skins.getDrawable("test03");
+		textButtonStyle.over = skins.getDrawable("test02");
+		
 		skin = new Skin();
 		stage = new Stage();
 		batch = new SpriteBatch();
 		img = new Texture("background.jpg");
 		
 		Gdx.input.setInputProcessor(stage);
+
 		
-		Pixmap pixmap = new Pixmap(Gdx.app.getGraphics().getWidth() / 2 - 100, Gdx.app.getGraphics().getHeight() / 4, Format.RGBA8888);
-		pixmap.setColor(Color.rgba8888(1, 1, 1, (float) 0.1));
-		pixmap.fill();
-
-		skin.add("white", new Texture(pixmap));
-
-		// Store the default libgdx font under the name "default".
-		BitmapFont bfont=new BitmapFont();
-		skin.add("default",bfont);
 
 		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
+	/*	TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
 		textButtonStyle.over = skin.newDrawable("white", Color.WHITE);
 
-		textButtonStyle.font = skin.getFont("default");
-
-		skin.add("default", textButtonStyle);
+		textButtonStyle.font = skin.getFont("default");*/
 
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
 		final TextButton playButton=new TextButton("Play",textButtonStyle);
 		playButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 2 + 20);
+		playButton.setHeight(100);
+		playButton.setWidth(100);
 		stage.addActor(playButton);
 		
 		final TextButton exitButton = new TextButton("Exit",textButtonStyle);
 		exitButton.setPosition(0, Gdx.app.getGraphics().getHeight() / 4);
+		exitButton.setHeight(100);
+		exitButton.setWidth(100);
 		stage.addActor(exitButton);
 		
 		playButton.addListener( new ClickListener() {              
@@ -80,6 +97,13 @@ public class MenuScreen implements Screen{
 	public void show() {
 
 	}
+	
+	
+
+	      
+	   
+	
+	
 
 	@Override
 	public void render(float delta) {

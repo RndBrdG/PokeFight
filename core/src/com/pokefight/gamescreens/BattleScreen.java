@@ -34,7 +34,7 @@ public class BattleScreen implements Screen{
 	
 	Texture battlefield = new Texture("battlefields/1.png");
 	private float count =360.0f;
-	private float count1 =100.0f;
+	private float count1 =130.0f;
 	private float count2 =0.0f;
 	private float count3 =48.0f;
 
@@ -54,11 +54,11 @@ public class BattleScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(battlefield, 0, 44, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
-		batch.draw(pokeenemytextreg, (float)200, (float)70,(float) 245,(float) 150,(float) count1, (float)count1, (float)1, (float)1,(float)0);
-		batch.draw(pokemetextreg, 6.f, 20.f,(float) 50,(float) 50,(float) 100, (float)100, (float)-1, (float)1,(float)0);
-		batch.draw(hpenemytextreg, 0.f, 180.f,(float) 50,(float) 50,(float) 122, (float)33, (float)1, (float)1,(float)0);
+		batch.draw(pokeenemytextreg, (float)250, (float)100,(float) 245,(float) 150,(float) count1, (float)count1, (float)1, (float)1,(float)0);
+		batch.draw(pokemetextreg, 16.f, 20.f,(float) 50,(float) 50,(float) 130, (float)130, (float)-1, (float)1,(float)0);
+		batch.draw(hpenemytextreg, 0.f, 170.f,(float) 50,(float) 50,(float) 122, (float)33, (float)1, (float)1,(float)0);
 		batch.draw(hpmetextreg, 272.f, 50.f,(float) 50,(float) 50,(float) 128, (float)42, (float)1, (float)1,(float)0);
-		batch.draw(lifered1, 50.f, 188.f,(float) 50,(float) 50,(float) count2, (float)2, (float)1, (float)1,(float)0);
+		batch.draw(lifered1, 50.f, 178.f,(float) 50,(float) 50,(float) count2, (float)2, (float)1, (float)1,(float)0);
 		batch.draw(lifered1, 344.f, 66.f,(float) 50,(float) 50,(float) count2, (float)2, (float)1, (float)1,(float)0);
 		batch.draw(dialogboxtextreg, 0.f, 0.f,(float) 50,(float) 50,(float) 400, (float)44, (float)1, (float)1,(float)0);
 		batch.end();
@@ -74,7 +74,7 @@ public class BattleScreen implements Screen{
 			count2 ++;
 		
 		if(count1 < 0.0f)
-			count1 = 100.0f;
+			count1 = 130.0f;
 			else
 			count1 --;
 		
