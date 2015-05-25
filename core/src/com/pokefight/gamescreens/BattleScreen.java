@@ -15,6 +15,13 @@ public class BattleScreen implements Screen{
 	private Trainer treinador1;
 	private Trainer treinador2;
 	
+	private int enemy_x_position = 240;
+	private int enemy_y_position = 100;
+	private int our_x_position = 6;
+	private int our_y_position = 20;
+
+	private int attack = 0;
+	
 	private SpriteBatch batch;
 	private Sprite pokeenemy;
 	private Sprite pokeme;
@@ -41,9 +48,6 @@ public class BattleScreen implements Screen{
 	private final TextureRegion dialogboxtextreg;
 	
 	private final Texture battlefield;
-	private float count =360.0f;
-	private float count1 =130.0f;
-	private float count2 =0.0f;
 
 	public BattleScreen(){
 		Random gerador = new Random();
@@ -57,7 +61,6 @@ public class BattleScreen implements Screen{
 		pokeenemy = new Sprite(treinador1.getPokemon(0).getId());
 		pokeme = new Sprite(treinador2.getPokemon(1).getId());
 		
-		System.out.println(pokeenemy.getImage());
 		enemy_Pokemon_image = new Texture("." + pokeenemy.getImage());
 		enemy_tr_Pokemon_image = new TextureRegion(enemy_Pokemon_image);
 		
@@ -82,6 +85,7 @@ public class BattleScreen implements Screen{
 		battlefield = new Texture("battlefields/" + mapa + ".png");
 		
 	}
+	
 	@Override
 	public void show() {
 	}
@@ -90,18 +94,41 @@ public class BattleScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(10/255.0f, 15/255.0f, 230/255.0f,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		batch.begin();
 		batch.draw(battlefield, 0, 44, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+		batch.draw(dialogboxtextreg, 0.f, 0.f, 50, 50, 400, 44, 1, 1, 0);
 
-		batch.draw(enemy_tr_Pokemon_image, (float)200, (float)70,(float) 245,(float) 150,(float) count1, (float)count1, (float)1, (float)1,(float)0);
-		batch.draw(my_pokemon_tr_image, 6.f, 20.f,(float) 50,(float) 50,(float) 100, (float)100, (float)-1, (float)1,(float)0);
-		batch.draw(enemy_tr_pokemonStatus, 0.f, 180.f,(float) 50,(float) 50,(float) 122, (float)33, (float)1, (float)1,(float)0);
-		batch.draw(my_tr_pokemonStatus, 272.f, 50.f,(float) 50,(float) 50,(float) 128, (float)42, (float)1, (float)1,(float)0);
-		batch.draw(enemy_tr_currentHP, 50.f, 188.f,(float) 50,(float) 50,(float) count2, (float)2, (float)1, (float)1,(float)0);
-		batch.draw(my_tr_currentHP, 344.f, 66.f,(float) 50,(float) 50,(float) count2, (float)2, (float)1, (float)1,(float)0);
-		batch.draw(dialogboxtextreg, 0.f, 0.f,(float) 50,(float) 50,(float) 400, (float)44, (float)1, (float)1,(float)0);
+		batch.draw(enemy_tr_Pokemon_image, enemy_x_position, enemy_y_position, 245, 150, 130, 130, 1, 1, 0);
+		batch.draw(my_pokemon_tr_image, our_x_position, our_y_position, 50, 50, 100, 100, -1, 1, 0);
+		
+		batch.draw(enemy_tr_pokemonStatus, 0.f, 180.f, 50, 50, 122, 33, 1, 1, 0);
+		batch.draw(my_tr_pokemonStatus, 272.f, 50.f, 50, 50, 128, 42, 1, 1,0);
+		
+		batch.draw(enemy_tr_currentHP, 50.f, 188.f, 50, 50, 0, 2, 1, 1,0);
+		batch.draw(my_tr_currentHP, 344.f, 66.f, 50, 50, 0, 2, 1, 1,0);
+		
 		batch.end();
 		
+		if(attack == 0){
+			if ( enemy_x_position < 260){
+				enemy_x_position += 1;
+				enemy_y_position += 0.5;
+			}else attack++;
+		}
+		else if (attack == 10){
+			if (enemy_x_position > 240){
+				enemy_x_position -= 1;
+				enemy_y_position -= 0.5;
+			}else if (enemy_x_position <= 240) {
+				attack = 0;
+				enemy_x_position = 240;
+				enemy_y_position = 100;
+			}
+		}
+		else {
+			attack++;
+		}
 		/*
 		if(count2 > 47.0f)
 			count2 = 0.0f;
