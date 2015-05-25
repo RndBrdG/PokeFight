@@ -1,7 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-  <classpathentry kind="src" path="src"/>
-  <classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
-  <classpathentry kind="output" path="bin"/>
-  <classpathentry kind="src" path="assets"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
+	<classpathentry kind="src" path="assets"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/fluent-hc-4.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/httpclient-4.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/httpclient-cache-4.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/httpcore-4.3.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/httpmime-4.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/java-json.jar"/>
+	<classpathentry kind="lib" path="F:/GitHub/PokeFight/lib/PokeJava.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

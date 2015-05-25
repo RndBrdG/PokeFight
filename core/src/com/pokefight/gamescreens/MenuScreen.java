@@ -26,7 +26,7 @@ public class MenuScreen implements Screen{
 	
 	   Stage stages;
 	    TextButton button;
-	    TextButtonStyle textButtonStyle;
+	    TextButtonStyle textButtonStylePlay, textButtonStyleExit;
 	    BitmapFont font;
 	    Skin skins;
 	    TextureAtlas buttonAtlas;
@@ -40,12 +40,19 @@ public class MenuScreen implements Screen{
         skins = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("buttons.pack"));
         skins.addRegions(buttonAtlas);
-        textButtonStyle = new TextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = skins.getDrawable("BALL");
-        textButtonStyle.down = skins.getDrawable("BALL");
-        textButtonStyle.checked = skins.getDrawable("BALL");
-		textButtonStyle.over = skins.getDrawable("BALL");
+        textButtonStylePlay = new TextButtonStyle();
+        textButtonStylePlay.font = font;
+        textButtonStylePlay.up = skins.getDrawable("play");
+        textButtonStylePlay.down = skins.getDrawable("play");
+        textButtonStylePlay.checked = skins.getDrawable("play");
+		textButtonStylePlay.over = skins.getDrawable("play2");
+		
+        textButtonStyleExit = new TextButtonStyle();
+        textButtonStyleExit.font = font;
+        textButtonStyleExit.up = skins.getDrawable("exit");
+        textButtonStyleExit.down = skins.getDrawable("exit");
+        textButtonStyleExit.checked = skins.getDrawable("exit");
+        textButtonStyleExit.over = skins.getDrawable("exit2");
 		
 		skin = new Skin();
 		stage = new Stage();
@@ -66,16 +73,16 @@ public class MenuScreen implements Screen{
 		textButtonStyle.font = skin.getFont("default");*/
 
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
-		final TextButton playButton=new TextButton("Play",textButtonStyle);
+		final TextButton playButton=new TextButton("",textButtonStylePlay);
 		playButton.setPosition(10, 5);
-		playButton.setHeight(40);
-		playButton.setWidth(40);
+		playButton.setHeight(35);
+		playButton.setWidth(102);
 		stage.addActor(playButton);
 		
-		final TextButton exitButton = new TextButton("Exit",textButtonStyle);
-		exitButton.setPosition(60,5);
-		exitButton.setHeight(40);
-		exitButton.setWidth(40);
+		final TextButton exitButton = new TextButton("",textButtonStyleExit);
+		exitButton.setPosition(135,5);
+		exitButton.setHeight(35);
+		exitButton.setWidth(91);
 		stage.addActor(exitButton);
 		
 		playButton.addListener( new ClickListener() {              
@@ -113,7 +120,7 @@ public class MenuScreen implements Screen{
 		batch.end();
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
-		stage.setDebugAll(true);
+		//stage.setDebugAll(true);
 	}
 
 	@Override
