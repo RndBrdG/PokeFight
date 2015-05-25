@@ -1,0 +1,54 @@
+
+menu.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+menubackground
+  rotate: false
+  xy: 1, 16
+  size: 118, 46
+  orig: 118, 46
+  offset: 0, 0
+  index: -1
+pokeselec
+  rotate: false
+  xy: 1, 1
+  size: 51, 13
+  orig: 51, 13
+  offset: 0, 0
+  index: -1
+poke
+  rotate: false
+  xy: 121, 49
+  size: 44, 13
+  orig: 44, 13
+  offset: 0, 0
+  index: -1
+fightselec
+  rotate: false
+  xy: 54, 1
+  size: 40, 13
+  orig: 40, 13
+  offset: 0, 0
+  index: -1
+quitselec
+  rotate: false
+  xy: 121, 34
+  size: 34, 13
+  orig: 34, 13
+  offset: 0, 0
+  index: -1
+fight
+  rotate: false
+  xy: 167, 49
+  size: 32, 13
+  orig: 32, 13
+  offset: 0, 0
+  index: -1
+quit
+  rotate: false
+  xy: 121, 19
+  size: 26, 13
+  orig: 26, 13
+  offset: 0, 0
+  index: -1
