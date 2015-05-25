@@ -15,10 +15,10 @@ public class BattleScreen implements Screen{
 	private Trainer treinador1;
 	private Trainer treinador2;
 	
-	private int enemy_x_position = 240;
-	private int enemy_y_position = 100;
-	private int our_x_position = 6;
-	private int our_y_position = 20;
+	private double enemy_x_position = 240;
+	private double enemy_y_position = 100;
+	private int our_x_position = 30;
+	private int our_y_position = 30;
 
 	private int attack = 0;
 	
@@ -99,7 +99,7 @@ public class BattleScreen implements Screen{
 		batch.draw(battlefield, 0, 44, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
 		batch.draw(dialogboxtextreg, 0.f, 0.f, 50, 50, 400, 44, 1, 1, 0);
 
-		batch.draw(enemy_tr_Pokemon_image, enemy_x_position, enemy_y_position, 245, 150, 130, 130, 1, 1, 0);
+		batch.draw(enemy_tr_Pokemon_image, (int)enemy_x_position, (int)enemy_y_position, 245, 150, 130, 130, 1, 1, 0);
 		batch.draw(my_pokemon_tr_image, our_x_position, our_y_position, 50, 50, 100, 100, -1, 1, 0);
 		
 		batch.draw(enemy_tr_pokemonStatus, 0.f, 180.f, 50, 50, 122, 33, 1, 1, 0);
@@ -110,25 +110,27 @@ public class BattleScreen implements Screen{
 		
 		batch.end();
 		
+		/*
 		if(attack == 0){
-			if ( enemy_x_position < 260){
-				enemy_x_position += 1;
-				enemy_y_position += 0.5;
+			if ( enemy_x_position <= 270){
+				enemy_x_position += 0.5;
+				enemy_y_position += 0.2;
 			}else attack++;
 		}
-		else if (attack == 10){
+		else if (attack == 100){
 			if (enemy_x_position > 240){
-				enemy_x_position -= 1;
-				enemy_y_position -= 0.5;
+				enemy_x_position -= 0.5;
+				enemy_y_position -= 0.2;
 			}else if (enemy_x_position <= 240) {
 				attack = 0;
-				enemy_x_position = 240;
-				enemy_y_position = 100;
+				//enemy_x_position = 240;
+				//enemy_y_position = 100;
 			}
 		}
 		else {
 			attack++;
 		}
+		*/
 		/*
 		if(count2 > 47.0f)
 			count2 = 0.0f;
