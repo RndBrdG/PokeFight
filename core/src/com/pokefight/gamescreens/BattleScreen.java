@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,6 +24,8 @@ import com.pokejava.Sprite;
 public class BattleScreen implements Screen{
 	private Trainer treinador1;
 	private Trainer treinador2;
+	
+	private Music music;
 	
 	private double enemy_x_position = 240;
 	private double enemy_y_position = 100;
@@ -67,7 +70,7 @@ public class BattleScreen implements Screen{
 	 private Stage stage;
 	 private Texture img;
 	 //FLOAT TEST LIFE
-	 float HP1 = 210, HP2=100, MAXHP=200;
+	 float HP1 = 190, HP2=100, MAXHP=200;
 	 
 	public BattleScreen(){
 		Random gerador = new Random();
@@ -103,6 +106,10 @@ public class BattleScreen implements Screen{
 		dialogboxtextreg = new TextureRegion(dialogbox);
 		
 		battlefield = new Texture("battlefields/" + mapa + ".png");
+		
+		music = Gdx.audio.newMusic(Gdx.files.internal("music/battle.mp3"));
+		music.play();
+		music.setLooping(true); 
 		
 		menuattack();
 		
@@ -177,7 +184,7 @@ public class BattleScreen implements Screen{
 	}
 	//CALC COLOR OF LIFE BAR (CRITIC, LOW, GOOD)
 	public String lifeBar(float hp, float maxhp){
-		if(maxhp<hp) System.out.print("Erro: Vida atual superior à vida total");
+		if(maxhp<hp) System.out.print("Erro: Vida atual superior ï¿½ vida total");
 		float average = hp/maxhp;
 		if(average > .7) return "hp-good.png";
 		else if(average > .45)return "hp-low.png";
@@ -190,10 +197,12 @@ public class BattleScreen implements Screen{
 
 	@Override
 	public void pause() {
+		music.pause();
 	}
 
 	@Override
 	public void resume() {
+		music.play();
 	}
 
 	@Override
@@ -202,6 +211,8 @@ public class BattleScreen implements Screen{
 
 	@Override
 	public void dispose() {
+		music.stop();
+		this.music.dispose();
 	}
 	
 	public void menuattack() {
@@ -231,6 +242,8 @@ public class BattleScreen implements Screen{
     textButtonStyleQuit.down = skins.getDrawable("quit");
     textButtonStyleQuit.checked = skins.getDrawable("quit");
     textButtonStyleQuit.over = skins.getDrawable("quitselec");
+    
+    
 	
 	skin = new Skin();
 	stage = new Stage();
@@ -275,7 +288,8 @@ public class BattleScreen implements Screen{
 	quitButton.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-	    	//Gdx.app.exit();
+	    	dispose();
+	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	    };
 	});
 	
