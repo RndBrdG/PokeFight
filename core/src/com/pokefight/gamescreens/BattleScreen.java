@@ -67,7 +67,7 @@ public class BattleScreen implements Screen{
 	 private Stage stage;
 	 private Texture img;
 	 //FLOAT TEST LIFE
-	 float HP1 = 20, HP2=100, MAXHP=200;
+	 float HP1 = 210, HP2=100, MAXHP=200;
 	 
 	public BattleScreen(){
 		Random gerador = new Random();
@@ -175,8 +175,9 @@ public class BattleScreen implements Screen{
 			count --;*/
 	
 	}
-	//CALC COLOR OF LIFE BAR (CRITIC, low, GOOD)
+	//CALC COLOR OF LIFE BAR (CRITIC, LOW, GOOD)
 	public String lifeBar(float hp, float maxhp){
+		if(maxhp<hp) System.out.print("Erro: Vida atual superior à vida total");
 		float average = hp/maxhp;
 		if(average > .7) return "hp-good.png";
 		else if(average > .45)return "hp-low.png";
