@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -58,6 +60,8 @@ public class BattleScreen implements Screen{
 	// DIALOG BOX
 	private final Texture dialogbox;
 	private final TextureRegion dialogboxtextreg;
+	
+	BitmapFont font12;
 	
 	private final Texture battlefield;
 	//MENUATTACK
@@ -106,6 +110,12 @@ public class BattleScreen implements Screen{
 		dialogboxtextreg = new TextureRegion(dialogbox);
 		
 		battlefield = new Texture("battlefields/" + mapa + ".png");
+	
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Pokemon.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 30;
+		font12 = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
 		
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/battle.mp3"));
 		music.play();
@@ -138,11 +148,13 @@ public class BattleScreen implements Screen{
 		batch.draw(my_tr_currentHP, 344.f, 66.f, 50, 50, (HP2/MAXHP)*48, 2, 1, 1,0);
 		//menuattackbackground
 		batch.draw(img, 282, 0, 118, 46);
+		font12.draw(batch, "HALLLO", 50, 100);
 		batch.end();
 		
 		//Menuattack
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
+ 
 		
 		/*
 		if(attack == 0){
