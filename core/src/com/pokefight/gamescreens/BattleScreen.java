@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -65,13 +66,13 @@ public class BattleScreen implements Screen{
 	
 	private final Texture battlefield;
 	//MENUATTACK
-	 TextButtonStyle textButtonStyleFight, textButtonStylePokemon, textButtonStyleQuit;
+	 TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
 	 Skin skins;
 	 TextureAtlas buttonAtlas;
 	 private Skin skin;
 	 Stage stages;
 	 BitmapFont font;
-	 private Stage stage;
+	 private Stage stageMenuAttack, stageMoves;
 	 private Texture img;
 	 //FLOAT TEST LIFE
 	 float HP1 = 190, HP2=100, MAXHP=200;
@@ -111,9 +112,12 @@ public class BattleScreen implements Screen{
 		
 		battlefield = new Texture("battlefields/" + mapa + ".png");
 	
+		//Font Type Pokemon ------------------------------------------------------------------
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Pokemon.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 30;
+		parameter.size = 10;
+		parameter.borderColor = Color.GRAY;
+		parameter.color = Color.BLACK;
 		font12 = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose();
 		
@@ -121,7 +125,7 @@ public class BattleScreen implements Screen{
 		music.play();
 		music.setLooping(true); 
 		
-		menuattack();
+		menuButtons();
 		
 	}
 	
@@ -148,13 +152,13 @@ public class BattleScreen implements Screen{
 		batch.draw(my_tr_currentHP, 344.f, 66.f, 50, 50, (HP2/MAXHP)*48, 2, 1, 1,0);
 		//menuattackbackground
 		batch.draw(img, 282, 0, 118, 46);
-		font12.draw(batch, "HALLLO", 50, 100);
 		batch.end();
 		
 		//Menuattack
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.draw();
+		stageMenuAttack.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stageMenuAttack.draw();
  
+			
 		
 		/*
 		if(attack == 0){
@@ -177,26 +181,12 @@ public class BattleScreen implements Screen{
 			attack++;
 		}
 		*/
-		/*
-		if(count2 > 47.0f)
-			count2 = 0.0f;
-			else
-			count2 ++;
-		
-		if(count1 < 0.0f)
-			count1 = 130.0f;
-			else
-			count1 --;
-		
-		if(count < 0.0f)
-			count = 360.0f;
-			else
-			count --;*/
+	
 	
 	}
 	//CALC COLOR OF LIFE BAR (CRITIC, LOW, GOOD)
 	public String lifeBar(float hp, float maxhp){
-		if(maxhp<hp) System.out.print("Erro: Vida atual superior � vida total");
+		if(maxhp<hp) System.out.print("Erro: Vida atual superior a vida total");
 		float average = hp/maxhp;
 		if(average > .7) return "hp-good.png";
 		else if(average > .45)return "hp-low.png";
@@ -227,26 +217,28 @@ public class BattleScreen implements Screen{
 		this.music.dispose();
 	}
 	
-	public void menuattack() {
+	public void menuButtons() {
  	stages = new Stage();
     Gdx.input.setInputProcessor(stages);
     font = new BitmapFont();
     skins = new Skin();
     buttonAtlas = new TextureAtlas(Gdx.files.internal("menu.pack"));
     skins.addRegions(buttonAtlas);
+    
+    //Menu Options Styles-----------------------------------------------------
     textButtonStyleFight = new TextButtonStyle();
     textButtonStyleFight.font = font;
     textButtonStyleFight.up = skins.getDrawable("fight");
     textButtonStyleFight.down = skins.getDrawable("fight");
     textButtonStyleFight.checked = skins.getDrawable("fight");
-	textButtonStyleFight.over = skins.getDrawable("fightselec");
+    textButtonStyleFight.over = skins.getDrawable("fightselec");
 	
-    textButtonStylePokemon = new TextButtonStyle();
-    textButtonStylePokemon.font = font;
-    textButtonStylePokemon.up = skins.getDrawable("poke");
-    textButtonStylePokemon.down = skins.getDrawable("poke");
-    textButtonStylePokemon.checked = skins.getDrawable("poke");
-    textButtonStylePokemon.over = skins.getDrawable("pokeselec");
+    textButtonStylePoke = new TextButtonStyle();
+    textButtonStylePoke.font = font;
+    textButtonStylePoke.up = skins.getDrawable("poke");
+    textButtonStylePoke.down = skins.getDrawable("poke");
+    textButtonStylePoke.checked = skins.getDrawable("poke");
+    textButtonStylePoke.over = skins.getDrawable("pokeselec");
     
     textButtonStyleQuit = new TextButtonStyle();
     textButtonStyleQuit.font = font;
@@ -255,35 +247,31 @@ public class BattleScreen implements Screen{
     textButtonStyleQuit.checked = skins.getDrawable("quit");
     textButtonStyleQuit.over = skins.getDrawable("quitselec");
     
-    
-	
 	skin = new Skin();
-	stage = new Stage();
+	stageMenuAttack = new Stage();
 	batch = new SpriteBatch();
 	img = new Texture("menubackground.png");
 	
-	Gdx.input.setInputProcessor(stage);
+	Gdx.input.setInputProcessor(stageMenuAttack);
 
-	
-
-	// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
+	//Menu Options Buttons--------------------------------------------------------
 	final TextButton fightButton=new TextButton("",textButtonStyleFight);
 	fightButton.setPosition(296, 24);
 	fightButton.setHeight(13);
 	fightButton.setWidth(40);
-	stage.addActor(fightButton);
+	stageMenuAttack.addActor(fightButton);
 	
-	final TextButton pokeButton = new TextButton("",textButtonStylePokemon);
+	final TextButton pokeButton = new TextButton("",textButtonStylePoke);
 	pokeButton.setPosition(296,8);
 	pokeButton.setHeight(13);
 	pokeButton.setWidth(51);
-	stage.addActor(pokeButton);
+	stageMenuAttack.addActor(pokeButton);
 	
 	final TextButton quitButton = new TextButton("",textButtonStyleQuit);
 	quitButton.setPosition(357,8);
 	quitButton.setHeight(13);
 	quitButton.setWidth(34);
-	stage.addActor(quitButton);
+	stageMenuAttack.addActor(quitButton);
 	
 	fightButton.addListener( new ClickListener() {              
 	    @Override
@@ -305,6 +293,60 @@ public class BattleScreen implements Screen{
 	    };
 	});
 	
+	
+	//Moves Styles------------------------------------------------------------------------
+ 	textButtonStyleMove1 = new TextButtonStyle();
+    textButtonStyleMove1.font = font12;
+
+    textButtonStyleMove2 = new TextButtonStyle();
+    textButtonStyleMove2.font = font12;
+    
+    textButtonStyleMove3 = new TextButtonStyle();
+    textButtonStyleMove3.font = font12;
+
+
+		
+
+  //Moves Buttons--------------------------------------------------------------------------
+	final TextButton move1Button=new TextButton("move1",textButtonStyleMove1);
+	move1Button.setPosition(15, 24);
+	stageMenuAttack.addActor(move1Button);
+	
+	final TextButton move2Button = new TextButton("move2",textButtonStyleMove2);
+	move2Button.setPosition(130,24);
+	stageMenuAttack.addActor(move2Button);
+	
+	final TextButton move3Button = new TextButton("move3",textButtonStyleMove3);
+	move3Button.setPosition(15,8);
+	stageMenuAttack.addActor(move3Button);
+	
+	move1Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	//((Game)Gdx.app.getApplicationListener()).setScreen(new BattleScreen());
+	    };
+	});
+	move2Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	//Gdx.app.exit();
+	    };
+	});
+	move3Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	dispose();
+	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+	    };
+	});
+	
 	}
+	
+	
+	    
+	   
+		
+		
+
 
 }
