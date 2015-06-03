@@ -1,5 +1,6 @@
 package com.pokefight.gamescreens;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Game;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.pokefight.gameplay.Trainer;
 import com.pokejava.Sprite;
 
@@ -66,7 +68,7 @@ public class BattleScreen implements Screen{
 	
 	private final Texture battlefield;
 	//MENUATTACK
-	 TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
+	 TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleMove4, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
 	 Skin skins;
 	 TextureAtlas buttonAtlas;
 	 private Skin skin;
@@ -76,6 +78,8 @@ public class BattleScreen implements Screen{
 	 private Texture img;
 	 //FLOAT TEST LIFE
 	 float HP1 = 190, HP2=100, MAXHP=200;
+	 //MOVES
+	 ArrayList <String> moves;
 	 
 	public BattleScreen(){
 		Random gerador = new Random();
@@ -297,28 +301,33 @@ public class BattleScreen implements Screen{
 	//Moves Styles------------------------------------------------------------------------
  	textButtonStyleMove1 = new TextButtonStyle();
     textButtonStyleMove1.font = font12;
-
+    
     textButtonStyleMove2 = new TextButtonStyle();
     textButtonStyleMove2.font = font12;
-    
+   
     textButtonStyleMove3 = new TextButtonStyle();
     textButtonStyleMove3.font = font12;
-
-
+    
+    textButtonStyleMove4 = new TextButtonStyle();
+    textButtonStyleMove4.font = font12;
 		
 
   //Moves Buttons--------------------------------------------------------------------------
-	final TextButton move1Button=new TextButton("move1",textButtonStyleMove1);
+	final TextButton move1Button=new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove1);
 	move1Button.setPosition(15, 24);
 	stageMenuAttack.addActor(move1Button);
 	
-	final TextButton move2Button = new TextButton("move2",textButtonStyleMove2);
+	final TextButton move2Button = new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove2);
 	move2Button.setPosition(130,24);
 	stageMenuAttack.addActor(move2Button);
 	
-	final TextButton move3Button = new TextButton("move3",textButtonStyleMove3);
+	final TextButton move3Button = new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove3);
 	move3Button.setPosition(15,8);
 	stageMenuAttack.addActor(move3Button);
+	
+	final TextButton move4Button = new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove4);
+	move4Button.setPosition(130,8);
+	stageMenuAttack.addActor(move4Button);
 	
 	move1Button.addListener( new ClickListener() {              
 	    @Override
@@ -333,6 +342,13 @@ public class BattleScreen implements Screen{
 	    };
 	});
 	move3Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	dispose();
+	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+	    };
+	});
+	move4Button.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 	    	dispose();
