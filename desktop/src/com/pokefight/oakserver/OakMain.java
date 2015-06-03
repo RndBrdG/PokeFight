@@ -23,12 +23,12 @@ public class OakMain {
 
 		server.addListener(new Listener() {
 			public void receive(Connection conn, Object obj) {
-				if (obj instanceof PokémonRequest) {			
-					PokémonRequest req = (PokémonRequest) obj;
+				if (obj instanceof PokÃ©monRequest) {			
+					PokÃ©monRequest req = (PokÃ©monRequest) obj;
 					ResourceResponse resp = new ResourceResponse(req);
 					
 					try {
-						resp.getResponse(); // Passar para Pokémon
+						resp.getResponse(); // Passar para Pokï¿½mon
 					} catch (OakServerException e) {
 						com.pokejava.Pokemon newPokemon = new com.pokejava.Pokemon(req.getId());
 						Sprite newPokemonSprite = new Sprite(req.getId());

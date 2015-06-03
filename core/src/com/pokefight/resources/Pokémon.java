@@ -1,12 +1,12 @@
 package com.pokefight.resources;
 
-public class Pokémon {
+public class PokÃ©mon {
 	private int id;
 	private String name;
 	private byte[] sprite;
 	private int maxHp;
 
-	public Pokémon(int id) {
+	public PokÃ©mon(int id) {
 		
 	}
 }
