@@ -1,6 +1,7 @@
 package com.pokefight.gameplay;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.pokejava.Pokemon;
 
@@ -16,9 +17,16 @@ public class Trainer {
 		Pokemon firstPokemon = new Pokemon(2);
 		Pokemon secondPokemon = new Pokemon(4);
 		
-		Battle_Pokemon firstBattlePokemon = new Battle_Pokemon(2, firstPokemon.getName(), 1, 1, firstPokemon.getAttack(), firstPokemon.getDefense(), firstPokemon.getHP(), firstPokemon.getAbilities());
-		Battle_Pokemon secondBattlePokemon = new Battle_Pokemon(4, secondPokemon.getName(), 1, 1, secondPokemon.getAttack(), secondPokemon.getDefense(), secondPokemon.getHP(), secondPokemon.getAbilities());		
+		Random gerador = new Random();
+		
+		Battle_Pokemon firstBattlePokemon = new Battle_Pokemon(2, firstPokemon.getName(), 1, 1, firstPokemon.getAttack(), firstPokemon.getDefense(), firstPokemon.getHP(), firstPokemon.getMoves());
+		Battle_Pokemon secondBattlePokemon = new Battle_Pokemon(4, secondPokemon.getName(), 1, 1, secondPokemon.getAttack(), secondPokemon.getDefense(), secondPokemon.getHP(), secondPokemon.getMoves());		
 
+		for( int i = 0; i < 4; i++){
+			int t = gerador.nextInt(1);
+			System.out.println(secondBattlePokemon.getMoves().get(t).getName());
+		}
+		
 		pokemons.add(firstBattlePokemon);
 		pokemons.add(secondBattlePokemon);
 	}

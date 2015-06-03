@@ -81,17 +81,17 @@ public class BattleScreen implements Screen{
 	 //MOVES
 	 ArrayList <String> moves;
 	 
-	public BattleScreen(){
+	 public BattleScreen(){
 		Random gerador = new Random();
 		int mapa = gerador.nextInt(11) + 1;
 		
 		treinador1 = new Trainer("us");
-		treinador2 = new Trainer("enemy");
+		//treinador2 = new Trainer("enemy");
 		
 		batch = new SpriteBatch();
 
 		pokeenemy = new Sprite(treinador1.getPokemon(0).getId());
-		pokeme = new Sprite(treinador2.getPokemon(1).getId());
+		//pokeme = new Sprite(treinador2.getPokemon(1).getId());
 		
 		enemy_Pokemon_image = new Texture("." + pokeenemy.getImage());
 		enemy_tr_Pokemon_image = new TextureRegion(enemy_Pokemon_image);
