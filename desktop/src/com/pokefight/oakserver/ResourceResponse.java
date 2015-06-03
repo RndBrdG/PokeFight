@@ -1,24 +1,27 @@
-package com.pokefight.resources;
+package com.pokefight.oakserver;
 
 import java.io.IOException;
 
 import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
 import org.json.JSONObject;
 
-public class OakServer {
-	static JSONObject getResource(String path) throws OakServerException {
-		Response serverResponse;
-
+class ResourceResponse {
+	private ResourceRequest req;
+	
+	ResourceResponse(ResourceRequest req) {
+		this.req = req;
+	}
+	
+	JSONObject getResponse() throws OakServerException {		
 		try {
-			serverResponse = Request.Get("localhost/api/" + path).execute();
+			Response serverResponse = Request.Get("localhost/api/" + req.getApiPath()).execute();
 			if (serverResponse.returnResponse().getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND)
 				throw new OakServerException();
 			
 			return parse(serverResponse.returnContent().asString());
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
