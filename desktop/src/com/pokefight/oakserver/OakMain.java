@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageIO;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
