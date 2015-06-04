@@ -40,6 +40,7 @@ public class Battle {
 	
 	public void match(float delta){
 		//System.out.println("ELAPSED TIME: " + ((initialTime + delta)));
+		//System.out.println("Name: " + jogador2.activePokemon().getName() + " > " + jogador2.activePokemon().getCurrentHP());
 		if (((initialTime + delta)) > 30){
 			System.out.println(actualPlayer.getNickname() + " não jogou e, como tal, perdeu!");
 			((Game)Gdx.app.getApplicationListener()).setScreen(new LoadScreen());
@@ -49,20 +50,27 @@ public class Battle {
 				initialTime = 0;
 				if (actualPlayer.equals(jogador1)){
 					// GET THE ATTACK MOVE
+					//System.out.println("Atacar Jogador 2");
 					nextMove(jogador2, 20);
 				} else {
 					// GET THE ATTACK MOVE
+					System.out.println("Atacar Jogador 1");
 					nextMove(jogador1, 20);
 				}
 			}
 		}
+		this.anyAttack = false;
 	}
 	
 	public void nextMove(Trainer to, double damage){
 		to.activePokemon().descreaseActualHP(damage);
 		if ( to.activePokemon().getCurrentHP() <= 0){
-			if (!to.setCurrentPokemon(to.firstPokemon_not_fainted()))
-				Gdx.app.exit();  // TODO: Fim de jogo em condições.
+			if (!to.setCurrentPokemon(to.firstPokemon_not_fainted())){
+				System.out.println("Exiting");
+				//Gdx.app.exit();  // TODO: Fim de jogo em condições.
+			}
+			else {to.setPokemonAtributeNull();
+			}
 		}
 	}
 	

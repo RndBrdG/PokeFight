@@ -9,7 +9,6 @@ public class PokeListener extends ClickListener{
 	Battle battle;
     public PokeListener(Battle battle){
         this.battle = battle;
-        System.out.println("hello");
     }
 	public void clicked(InputEvent event, float x, float y) {
 	}

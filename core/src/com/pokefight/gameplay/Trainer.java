@@ -20,8 +20,8 @@ public class Trainer {
 	private Texture pokemonTexture, pokemonStatus, currentHP;
 	private TextureRegion pokemonTextureRegion, pokemonStatusTextureRegion, currentHPTextureRegion;
 	
-	float x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon;
-	float x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, scaleX_status;
+	private float x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon;
+	private float x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, scaleX_status;
 	
 	public Trainer(String nickname, boolean adversario){
 		this.nickname = nickname;
@@ -32,7 +32,7 @@ public class Trainer {
 		
 		// GET INFORMATION
 		Pokemon firstPokemon = new Pokemon(2);
-		Pokemon secondPokemon = new Pokemon(4);
+		Pokemon secondPokemon = new Pokemon(101);
 		
 		ArrayList<Move> moves = new ArrayList<Move>();
 		moves.add(new Move(1));
@@ -40,14 +40,19 @@ public class Trainer {
 		moves.add(new Move(3));
 		moves.add(new Move(4));
 
-		Battle_Pokemon firstBattlePokemon = new Battle_Pokemon(2, firstPokemon.getName(), 1, 1, firstPokemon.getAttack(), firstPokemon.getDefense(), firstPokemon.getHP(), moves);
-		Battle_Pokemon secondBattlePokemon = new Battle_Pokemon(4, secondPokemon.getName(), 1, 1, secondPokemon.getAttack(), secondPokemon.getDefense(), secondPokemon.getHP(), moves);		
+		Battle_Pokemon firstBattlePokemon = new Battle_Pokemon(firstPokemon.getID(), firstPokemon.getName(), 1, 1, firstPokemon.getAttack(), firstPokemon.getDefense(), firstPokemon.getHP(), moves);
+		Battle_Pokemon secondBattlePokemon = new Battle_Pokemon(secondPokemon.getID(), secondPokemon.getName(), 1, 1, secondPokemon.getAttack(), secondPokemon.getDefense(), secondPokemon.getHP(), moves);		
 		
 		pokemons.add(firstBattlePokemon);
 		pokemons.add(secondBattlePokemon);
 		
-		if (adversario) pokemonAtivo = pokemons.get(0);
-		else pokemonAtivo = pokemons.get(1);
+		if (!adversario) { pokemonAtivo = pokemons.get(0);}
+		else { pokemonAtivo = pokemons.get(1);}
+	}
+	
+	public void setPokemonAtributeNull(){
+		this.pokemon = null;
+		update();
 	}
 	
 	public String getNickname(){
@@ -67,7 +72,7 @@ public class Trainer {
 	 */
 	public Battle_Pokemon firstPokemon_not_fainted(){
 		for(int i = 0; i < pokemons.size(); i++){
-			if (pokemons.get(i).getHp() > 0) return pokemons.get(i);
+			if (pokemons.get(i).getHp() > 0) {System.out.println("Escolho-te a ti " + pokemons.get(i).getName());return pokemons.get(i);}
 			else continue;
 		}
 		return null;
@@ -95,6 +100,7 @@ public class Trainer {
 	public void update(){
 		
 		if ( pokemon == null){
+			System.out.println(this.activePokemon().getName());
 			pokemon = new Sprite(this.activePokemon().getId());
 			pokemonTexture = new Texture("." + pokemon.getImage());
 			pokemonTextureRegion = new TextureRegion(pokemonTexture);
@@ -147,6 +153,7 @@ public class Trainer {
 		if (new_actual == null) return false;
 		else {
 			this.pokemonAtivo = new_actual;
+			System.out.println("Nome : " + pokemonAtivo.getName());
 			return true;
 		}
 	}

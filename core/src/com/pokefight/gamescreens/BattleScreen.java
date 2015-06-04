@@ -101,7 +101,8 @@ public class BattleScreen implements Screen{
 
 		stageMenuRight.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stageMenuRight.draw();	
-
+		
+		this.battle.match(delta);
 		/*
 		if(attack == 0){
 			if ( enemy_x_position <= 270){
@@ -269,25 +270,24 @@ public class BattleScreen implements Screen{
 		
 		move1Button.addListener( new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				System.out.println("regerg");
-				Gdx.app.log("button", "clicked ");  
+				battle.changeAnyAttack();  
 			};
 		});
 		
 		move2Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("button", "clicked ");  
+				battle.changeAnyAttack();
 			};
 		});
 		
 		move3Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("button", "clicked ");  
+				battle.changeAnyAttack(); 
 			};
 		});
 		move4Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("button", "clicked ");  
+				battle.changeAnyAttack(); 
 			};
 		});
 
