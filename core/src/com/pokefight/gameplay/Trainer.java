@@ -1,6 +1,7 @@
 package com.pokefight.gameplay;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -49,6 +50,9 @@ public class Trainer {
 		else pokemonAtivo = pokemons.get(1);
 	}
 	
+	public String getNickname(){
+		return this.nickname;
+	}
 	/*
 	 *  Update win or loss column on database.
 	 *  Returns true of successful, or false otherwise.
@@ -61,7 +65,7 @@ public class Trainer {
 	/*
 	 * Returns first pokemon which hp is not 0;
 	 */
-	private Battle_Pokemon firstPokemon_not_fainted(){
+	public Battle_Pokemon firstPokemon_not_fainted(){
 		for(int i = 0; i < pokemons.size(); i++){
 			if (pokemons.get(i).getHp() > 0) return pokemons.get(i);
 			else continue;
@@ -88,8 +92,7 @@ public class Trainer {
 		return this.pokemonAtivo;
 	}
 	
-	
-public void update(){
+	public void update(){
 		
 		if ( pokemon == null){
 			pokemon = new Sprite(this.activePokemon().getId());
@@ -138,5 +141,13 @@ public void update(){
 		if(average > .7) return "hp-good.png";
 		else if(average > .45)return "hp-low.png";
 		else return "hp-crit.png";
+	}
+	
+	public boolean setCurrentPokemon(Battle_Pokemon new_actual){
+		if (new_actual == null) return false;
+		else {
+			this.pokemonAtivo = new_actual;
+			return true;
+		}
 	}
 }

@@ -93,4 +93,7 @@ public class Battle_Pokemon {
 		this.moves = moves;
 	}
 	
+	public void descreaseActualHP(double hp){
+		this.currentHP -= hp;
+	}	
 }
