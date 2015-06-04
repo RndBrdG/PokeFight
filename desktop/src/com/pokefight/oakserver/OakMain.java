@@ -105,7 +105,7 @@ public class OakMain {
 					try {
 						JSONObject jsonResp = resp.getResponse();
 
-						id = jsonResp.getInt("moveid");
+						id = jsonResp.getInt("moveId");
 						name = jsonResp.getString("name");
 						power = jsonResp.getInt("power");
 					} catch (OakServerException e) {
@@ -114,12 +114,12 @@ public class OakMain {
 						power = newMove.getPower();
 						
 						Map<String, String> jsonParameters = new HashMap<String, String>();
-						jsonParameters.put("moveid", new Integer(id).toString());
+						jsonParameters.put("moveId", new Integer(id).toString());
 						jsonParameters.put("name", name);
 						jsonParameters.put("power", new Integer(power).toString());
 						JSONObject newMoveJson = new JSONObject(jsonParameters);
 						
-						postToHttp("move/" + id, newMoveJson);
+						postToHttp("moves/" + id, newMoveJson);
 					
 					} catch (Exception e) {
 						e.printStackTrace();
