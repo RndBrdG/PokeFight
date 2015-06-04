@@ -1,7 +1,7 @@
 package com.pokefight.oakserver;
 
 public class MoveRequest extends ResourceRequest {
-	private int id;
+	private final int id;
 	
 	MoveRequest(int id) {
 		this.id = id;

@@ -1,7 +1,7 @@
 package com.pokefight.oakserver;
 
 public class PokémonRequest extends ResourceRequest {
-	private int id;
+	private final int id;
 	
 	PokémonRequest(int id) {
 		this.id = id;

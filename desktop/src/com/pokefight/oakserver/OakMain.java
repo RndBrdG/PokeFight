@@ -115,7 +115,44 @@ public class OakMain {
 						jsonParameters.put("power", new Integer(power).toString());
 						JSONObject newMoveJson = new JSONObject(jsonParameters);
 						
-						postToHttp("move/" + id, newMoveJson);
+						postToHttp(req.getApiPath(), newMoveJson);
+					
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					conn.sendUDP(new Move(id, name, power));
+				}
+			}
+		});
+		
+		server.addListener(new Listener() {
+			public void receive(Connection conn, Object obj) {
+				if (obj instanceof MoveRequest) {
+					int id = 0;
+					String name = "";
+					int power = 0;
+
+					MoveRequest req = (MoveRequest) obj;
+					ResourceResponse resp = new ResourceResponse(req);
+
+					try {
+						JSONObject jsonResp = resp.getResponse();
+
+						id = jsonResp.getInt("moveid");
+						name = jsonResp.getString("name");
+						power = jsonResp.getInt("power");
+					} catch (OakServerException e) {
+						Move newMove = new com.pokejava.Move(req.getId());
+						name = newMove.getName();
+						power = newMove.getPower();
+						
+						Map<String, String> jsonParameters = new HashMap<String, String>();
+						jsonParameters.put("moveid", new Integer(id).toString());
+						jsonParameters.put("name", name);
+						jsonParameters.put("power", new Integer(power).toString());
+						JSONObject newMoveJson = new JSONObject(jsonParameters);
+						
+						postToHttp(req.getApiPath(), newMoveJson);
 					
 					} catch (Exception e) {
 						e.printStackTrace();
