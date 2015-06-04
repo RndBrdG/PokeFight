@@ -31,13 +31,7 @@ public class Trainer {
 	float x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon;
 	float x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, scaleX_status;
 	
-	private TextButtonStyle textButtonStylePokeNameThis; 
-	private TextButtonStyle textButtonStylePokeNameAdv; 
-	
 	BitmapFont font12;
-	
-	Stage name;
-	
 	
 	public Trainer(String nickname, boolean adversario){
 		this.nickname = nickname;
@@ -70,20 +64,7 @@ public class Trainer {
 		
 		pokemons.add(firstBattlePokemon);
 		pokemons.add(secondBattlePokemon);
-		
-		name = new Stage();
-		textButtonStylePokeNameThis = new TextButtonStyle();
-		textButtonStylePokeNameThis.font = font12;
-		textButtonStylePokeNameAdv = new TextButtonStyle();
-		textButtonStylePokeNameAdv.font = font12;
-		final TextButton thisPokeName=new TextButton(this.getPokemon(0).getName(),textButtonStylePokeNameThis);
-		thisPokeName.setPosition(298, 72);
-		final TextButton thisPokeNameAdv=new TextButton(this.getPokemon(0).getName(),textButtonStylePokeNameAdv);
-		thisPokeNameAdv.setPosition(3, 195);
-		name.addActor(thisPokeName);
-		name.addActor(thisPokeNameAdv);
-		
-		
+				
 		if (adversario) pokemonAtivo = pokemons.get(0);
 		else pokemonAtivo = pokemons.get(1);
 	}
@@ -172,8 +153,8 @@ public class Trainer {
 			batch.draw(pokemonTextureRegion, x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon, 1, 0);
 			batch.draw(pokemonStatusTextureRegion, x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, 1, 1, 0);
 			batch.draw(currentHPTextureRegion, 50.f, 188.f, 50, 50, (this.activePokemon().getCurrentHP()/this.activePokemon().getHp())*48, 2, 1, 1, 0);
-			name.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-			name.draw();	
+			font12.draw(batch, this.getPokemon(0).getName(), 300, 83);	
+			font12.draw(batch, this.getPokemon(0).getName(), 5, 205);
 			batch.end();
 	}
 	
