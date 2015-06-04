@@ -63,7 +63,3 @@ build/
 ## OS Specific
 .DS_Store
 /bin/
-
-android\.classpath
-desktop\.classpath
-core\.classpath
