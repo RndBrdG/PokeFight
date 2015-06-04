@@ -112,6 +112,14 @@ public class OakMain {
 						Move newMove = new com.pokejava.Move(req.getId());
 						name = newMove.getName();
 						power = newMove.getPower();
+						
+						Map<String, String> jsonParameters = new HashMap<String, String>();
+						jsonParameters.put("moveid", new Integer(id).toString());
+						jsonParameters.put("name", name);
+						jsonParameters.put("power", new Integer(power).toString());
+						JSONObject newMoveJson = new JSONObject(jsonParameters);
+						
+						postToHttp("move/" + id, newMoveJson);
 					
 					} catch (Exception e) {
 						e.printStackTrace();
