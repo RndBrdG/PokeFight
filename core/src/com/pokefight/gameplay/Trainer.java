@@ -10,9 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.pokejava.Move;
 import com.pokejava.Pokemon;
 import com.pokejava.Sprite;
@@ -30,14 +27,9 @@ public class Trainer {
 	
 	private float x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon;
 	private float x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, scaleX_status;
+	private float x_position_font, y_position_font;
 	
-	private TextButtonStyle textButtonStylePokeNameThis; 
-	private TextButtonStyle textButtonStylePokeNameAdv; 
-	
-	private BitmapFont font12;
-	
-	private Stage name;
-	
+	BitmapFont font12;
 	
 	public Trainer(String nickname, boolean adversario){
 		this.nickname = nickname;
@@ -56,7 +48,7 @@ public class Trainer {
 		// GET POKEMONS FROM DATABASE
 		
 		// GET INFORMATION
-		Pokemon firstPokemon = new Pokemon(2);
+		Pokemon firstPokemon = new Pokemon(6);
 		Pokemon secondPokemon = new Pokemon(101);
 		
 		ArrayList<Move> moves = new ArrayList<Move>();
@@ -64,26 +56,17 @@ public class Trainer {
 		moves.add(new Move(2));
 		moves.add(new Move(3));
 		moves.add(new Move(4));
-
 		
-		name = new Stage();
-		textButtonStylePokeNameThis = new TextButtonStyle();
-		textButtonStylePokeNameThis.font = font12;
-		textButtonStylePokeNameAdv = new TextButtonStyle();
-		textButtonStylePokeNameAdv.font = font12;
-		final TextButton thisPokeName=new TextButton(this.getPokemon(0).getName(),textButtonStylePokeNameThis);
-		thisPokeName.setPosition(298, 72);
-		final TextButton thisPokeNameAdv=new TextButton(this.getPokemon(0).getName(),textButtonStylePokeNameAdv);
-		thisPokeNameAdv.setPosition(3, 195);
-		name.addActor(thisPokeName);
-		name.addActor(thisPokeNameAdv);
-
 		Battle_Pokemon firstBattlePokemon = new Battle_Pokemon(firstPokemon.getID(), firstPokemon.getName(), 1, 1, firstPokemon.getAttack(), firstPokemon.getDefense(), firstPokemon.getHP(), moves);
 		Battle_Pokemon secondBattlePokemon = new Battle_Pokemon(secondPokemon.getID(), secondPokemon.getName(), 1, 1, secondPokemon.getAttack(), secondPokemon.getDefense(), secondPokemon.getHP(), moves);		
 		
 		pokemons.add(firstBattlePokemon);
 		pokemons.add(secondBattlePokemon);
+				
+		if (!adversario) pokemonAtivo = pokemons.get(0);
+		else pokemonAtivo = pokemons.get(1);
 	}
+
 	public void setPokemonAtributeNull(){
 		this.pokemon = null;
 		update();
@@ -135,7 +118,7 @@ public class Trainer {
 		
 		if ( pokemon == null){
 			System.out.println(this.activePokemon().getName());
-			pokemon = new Sprite(this.activePokemon().getId());
+			pokemon = new Sprite(this.activePokemon().getId() + 1);
 			pokemonTexture = new Texture("." + pokemon.getImage());
 			pokemonTextureRegion = new TextureRegion(pokemonTexture);
 			if (adversario)
@@ -155,6 +138,8 @@ public class Trainer {
 			x_position_status = 0; y_position_status = 180;
 			x_origin_status = 50; y_origin_status = 50;
 			width_status = 122; height_status = 33;
+			// name
+			x_position_font = 5; y_position_font = 205;
 		} else {
 			x_position_pokemon = 30; y_position_pokemon = 30;
 			x_origin_pokemon = 50; y_origin_pokemon = 50;
@@ -164,6 +149,8 @@ public class Trainer {
 			x_position_status = 272; y_position_status = 50;
 			x_origin_status = 50; y_origin_status = 50;
 			width_status = 128; height_status = 42;
+			// name
+			x_position_font = 300; y_position_font = 83;
 		}
 		
 		
@@ -174,8 +161,7 @@ public class Trainer {
 			batch.draw(pokemonTextureRegion, x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon, 1, 0);
 			batch.draw(pokemonStatusTextureRegion, x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, 1, 1, 0);
 			batch.draw(currentHPTextureRegion, 50.f, 188.f, 50, 50, (this.activePokemon().getCurrentHP()/this.activePokemon().getHp())*48, 2, 1, 1, 0);
-			name.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-			name.draw();	
+			font12.draw(batch, this.activePokemon().getName(), x_position_font, y_position_font);	
 			batch.end();
 	}
 	
