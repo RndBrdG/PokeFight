@@ -8,7 +8,7 @@ public class PokémonRequest extends ResourceRequest {
 		apiPath = "pokemon/" + id;
 	}
 	
-	public int getId() {
+	int getId() {
 		return id;
 	}
 }
