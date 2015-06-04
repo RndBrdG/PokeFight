@@ -1,5 +1,6 @@
 package com.pokefight.resources;
 
+@SuppressWarnings("unused")
 public class Pokémon {
 	private int id;
 	private String name;

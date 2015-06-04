@@ -1,15 +1,31 @@
 package com.pokefight.gameplay;
 
 import java.util.ArrayList;
-import java.util.Random;
-
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.pokejava.Move;
 import com.pokejava.Pokemon;
+import com.pokejava.Sprite;
 
 public class Trainer {
 	private ArrayList<Battle_Pokemon> pokemons;
+	private Battle_Pokemon pokemonAtivo;
 	
+	private String nickname;
+	private boolean adversario;
 	
-	public Trainer(String nickname){
+	private Sprite pokemon;
+	private Texture pokemonTexture, pokemonStatus, currentHP;
+	private TextureRegion pokemonTextureRegion, pokemonStatusTextureRegion, currentHPTextureRegion;
+	
+	float x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon;
+	float x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, scaleX_status;
+	
+	public Trainer(String nickname, boolean adversario){
+		this.nickname = nickname;
+		this.adversario = adversario;
+		
 		pokemons = new ArrayList<Battle_Pokemon>();
 		// GET POKEMONS FROM DATABASE
 		
@@ -17,18 +33,20 @@ public class Trainer {
 		Pokemon firstPokemon = new Pokemon(2);
 		Pokemon secondPokemon = new Pokemon(4);
 		
-		Random gerador = new Random();
-		
-		Battle_Pokemon firstBattlePokemon = new Battle_Pokemon(2, firstPokemon.getName(), 1, 1, firstPokemon.getAttack(), firstPokemon.getDefense(), firstPokemon.getHP(), firstPokemon.getMoves());
-		Battle_Pokemon secondBattlePokemon = new Battle_Pokemon(4, secondPokemon.getName(), 1, 1, secondPokemon.getAttack(), secondPokemon.getDefense(), secondPokemon.getHP(), secondPokemon.getMoves());		
+		ArrayList<Move> moves = new ArrayList<Move>();
+		moves.add(new Move(1));
+		moves.add(new Move(2));
+		moves.add(new Move(3));
+		moves.add(new Move(4));
 
-		for( int i = 0; i < 4; i++){
-			int t = gerador.nextInt(1);
-			System.out.println(secondBattlePokemon.getMoves().get(t).getName());
-		}
+		Battle_Pokemon firstBattlePokemon = new Battle_Pokemon(2, firstPokemon.getName(), 1, 1, firstPokemon.getAttack(), firstPokemon.getDefense(), firstPokemon.getHP(), moves);
+		Battle_Pokemon secondBattlePokemon = new Battle_Pokemon(4, secondPokemon.getName(), 1, 1, secondPokemon.getAttack(), secondPokemon.getDefense(), secondPokemon.getHP(), moves);		
 		
 		pokemons.add(firstBattlePokemon);
 		pokemons.add(secondBattlePokemon);
+		
+		if (adversario) pokemonAtivo = pokemons.get(0);
+		else pokemonAtivo = pokemons.get(1);
 	}
 	
 	/*
@@ -62,5 +80,63 @@ public class Trainer {
 		}
 	}
 	
+	public void render(){
+		
+	}
 	
+	public Battle_Pokemon activePokemon(){
+		return this.pokemonAtivo;
+	}
+	
+	
+public void update(){
+		
+		if ( pokemon == null){
+			pokemon = new Sprite(this.activePokemon().getId());
+			pokemonTexture = new Texture("." + pokemon.getImage());
+			pokemonTextureRegion = new TextureRegion(pokemonTexture);
+			if (adversario)
+				pokemonStatus = new Texture("media/img/hp-foe.png");
+			else pokemonStatus = new Texture("media/img/hp-me.png");
+			pokemonStatusTextureRegion = new TextureRegion(pokemonStatus);
+			currentHP = new Texture("media/img/"+ lifeBar(this.activePokemon().getCurrentHP(), this.activePokemon().getHp()));
+			currentHPTextureRegion = new TextureRegion(currentHP);
+		}
+		
+		if (adversario){
+			x_position_pokemon = 240; y_position_pokemon = 100;
+			x_origin_pokemon = 130; y_origin_pokemon = 130;
+			width_pokemon = 130; height_pokemon = 130;
+			scaleX_pokemon = 1;
+			// status
+			x_position_status = 0; y_position_status = 180;
+			x_origin_status = 50; y_origin_status = 50;
+			width_status = 122; height_status = 33;
+		} else {
+			x_position_pokemon = 30; y_position_pokemon = 30;
+			x_origin_pokemon = 50; y_origin_pokemon = 50;
+			width_pokemon = 100; height_pokemon = 100;
+			scaleX_pokemon = -1;
+			// status
+			x_position_status = 272; y_position_status = 50;
+			x_origin_status = 50; y_origin_status = 50;
+			width_status = 128; height_status = 42;
+		}
+	}
+	
+	public void draw(SpriteBatch batch){
+			batch.begin();
+			batch.draw(pokemonTextureRegion, x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon, 1, 0);
+			batch.draw(pokemonStatusTextureRegion, x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, 1, 1, 0);
+			batch.draw(currentHPTextureRegion, 50.f, 188.f, 50, 50, (this.activePokemon().getCurrentHP()/this.activePokemon().getHp())*48, 2, 1, 1, 0);
+			batch.end();
+	}
+	
+	public String lifeBar(float hp, float maxhp){
+		if(maxhp<hp) System.out.print("Erro: Vida atual superior a vida total");
+		float average = hp/maxhp;
+		if(average > .7) return "hp-good.png";
+		else if(average > .45)return "hp-low.png";
+		else return "hp-crit.png";
+	}
 }

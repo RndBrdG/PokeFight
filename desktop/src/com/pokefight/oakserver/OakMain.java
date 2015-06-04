@@ -28,7 +28,7 @@ public class OakMain {
 					ResourceResponse resp = new ResourceResponse(req);
 					
 					try {
-						resp.getResponse(); // Passar para Pok�mon
+						resp.getResponse(); // Passar para Pokémon
 					} catch (OakServerException e) {
 						com.pokejava.Pokemon newPokemon = new com.pokejava.Pokemon(req.getId());
 						Sprite newPokemonSprite = new Sprite(req.getId());
@@ -38,6 +38,23 @@ public class OakMain {
 							URL url = new URL("http://www.pokeapi.co" + newPokemonSprite.getImage());
 							spriteImg = ImageIO.read(url);
 						} catch (IOException i) {
+						}
+					}
+				}
+				else if (obj instanceof MoveRequest){
+					MoveRequest req = (MoveRequest) obj;
+					ResourceResponse resp = new ResourceResponse(req);
+					
+					try {
+						resp.getResponse();
+					} catch(OakServerException e){
+						com.pokejava.Move newMove = new com.pokejava.Move(req.getId());
+						
+						try {
+							URL url = new URL("http://www.pokeapi.com" + newMove.getURI());
+							
+						}catch (IOException i){
+							
 						}
 					}
 				}

@@ -2,7 +2,6 @@ package com.pokefight.gamescreens;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -22,44 +21,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.pokefight.gameplay.Trainer;
-import com.pokejava.Sprite;
+import com.pokefight.gameplay.Battle;
 
 public class BattleScreen implements Screen{
-	private Trainer treinador1;
-	private Trainer treinador2;
+	
+	private Battle battle;
 	
 	private Music music;
 	
-	private double enemy_x_position = 240;
-	private double enemy_y_position = 100;
-	private int our_x_position = 30;
-	private int our_y_position = 30;
-
-	private int attack = 0;
-	
 	private SpriteBatch batch;
-	private Sprite pokeenemy;
-	private Sprite pokeme;
-	// ENEMY PLAYER POKEMON
-	private Texture enemy_Pokemon_image;
-	private TextureRegion enemy_tr_Pokemon_image;
-	// THIS PLAYER POKEMON
-	private Texture my_pokemon_image;
-	private TextureRegion my_pokemon_tr_image;
-	// CURRENT STATUS [ HP / EXP ] OF THIS PLAYER POKEMON
-	private Texture enemy_pokemonStatus;
-	private TextureRegion enemy_tr_pokemonStatus;
-	// CURRENT STATUS [ HP / EXP ] OF THIS PLAYER POKEMON
-	private final Texture my_pokemonStatus;
-	private final TextureRegion my_tr_pokemonStatus;
-	// CURRENT HP OF ENEMY
-	private final Texture enemy_currentHP;
-	private final TextureRegion enemy_tr_currentHP;
-	// CURRENT HP OF THIS PLAYER
-	private final Texture my_currentHP;
-	private final TextureRegion my_tr_currentHP;
 	// DIALOG BOX
 	private final Texture dialogbox;
 	private final TextureRegion dialogboxtextreg;
@@ -68,16 +38,13 @@ public class BattleScreen implements Screen{
 	
 	private final Texture battlefield;
 	//MENUATTACK
-	 TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleMove4, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
-	 Skin skins;
-	 TextureAtlas buttonAtlas;
-	 private Skin skin;
-	 Stage stages;
-	 BitmapFont font;
-	 private Stage stageMenuAttack, stageMoves;
+	 private TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleMove4, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
+	 private Skin skins;
+	 private TextureAtlas buttonAtlas;
+	 private Stage stages;
+	 private BitmapFont font;
+	 private Stage stageMenuAttack;
 	 private Texture img;
-	 //FLOAT TEST LIFE
-	 float HP1 = 190, HP2=100, MAXHP=200;
 	 //MOVES
 	 ArrayList <String> moves;
 	 
@@ -85,32 +52,9 @@ public class BattleScreen implements Screen{
 		Random gerador = new Random();
 		int mapa = gerador.nextInt(11) + 1;
 		
-		treinador1 = new Trainer("us");
-		//treinador2 = new Trainer("enemy");
-		
+		battle = new Battle();
 		batch = new SpriteBatch();
 
-		pokeenemy = new Sprite(treinador1.getPokemon(0).getId());
-		//pokeme = new Sprite(treinador2.getPokemon(1).getId());
-		
-		enemy_Pokemon_image = new Texture("." + pokeenemy.getImage());
-		enemy_tr_Pokemon_image = new TextureRegion(enemy_Pokemon_image);
-		
-		my_pokemon_image = new Texture("." + pokeme.getImage());
-		my_pokemon_tr_image = new TextureRegion(my_pokemon_image);
-		
-		enemy_pokemonStatus = new Texture("media/img/hp-foe.png");
-		enemy_tr_pokemonStatus = new TextureRegion(enemy_pokemonStatus);
-		
-		my_pokemonStatus = new Texture("media/img/hp-me.png");
-		my_tr_pokemonStatus = new TextureRegion(my_pokemonStatus);
-		
-		enemy_currentHP = new Texture("media/img/"+ lifeBar(HP1, MAXHP));
-		enemy_tr_currentHP = new TextureRegion(enemy_currentHP);
-		
-		my_currentHP = new Texture("media/img/"+ lifeBar(HP2, MAXHP));
-		my_tr_currentHP = new TextureRegion(my_currentHP);
-		
 		dialogbox = new Texture("media/img/dialog-box.png");
 		dialogboxtextreg = new TextureRegion(dialogbox);
 		
@@ -142,28 +86,22 @@ public class BattleScreen implements Screen{
 		Gdx.gl.glClearColor(10/255.0f, 15/255.0f, 230/255.0f,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		batch.disableBlending();
 		batch.begin();
-		batch.draw(battlefield, 0, 44, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
-		batch.draw(dialogboxtextreg, 0.f, 0.f, 50, 50, 400, 44, 1, 1, 0);
-
-		batch.draw(enemy_tr_Pokemon_image, (int)enemy_x_position, (int)enemy_y_position, 245, 150, 130, 130, 1, 1, 0);
-		batch.draw(my_pokemon_tr_image, our_x_position, our_y_position, 50, 50, 100, 100, -1, 1, 0);
-		
-		batch.draw(enemy_tr_pokemonStatus, 0.f, 180.f, 50, 50, 122, 33, 1, 1, 0);
-		batch.draw(my_tr_pokemonStatus, 272.f, 50.f, 50, 50, 128, 42, 1, 1,0);
-		
-		batch.draw(enemy_tr_currentHP, 50.f, 188.f, 50, 50, (HP1/MAXHP)*48, 2, 1, 1,0);
-		batch.draw(my_tr_currentHP, 344.f, 66.f, 50, 50, (HP2/MAXHP)*48, 2, 1, 1,0);
-		//menuattackbackground
-		batch.draw(img, 282, 0, 118, 46);
+			batch.draw(battlefield, 0, 44, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+			batch.draw(dialogboxtextreg, 0.f, 0.f, 50, 50, 400, 44, 1, 1, 0);
+			batch.draw(img, 282, 0, 118, 46);
 		batch.end();
 		
-		//Menuattack
-		stageMenuAttack.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stageMenuAttack.draw();
- 
-			
+		//this.battle.update(false);
+		batch.enableBlending();
+		battle.getTrainer(true).update();
+		battle.getTrainer(true).draw(batch);
+		battle.getTrainer(false).update();
+		battle.getTrainer(false).draw(batch);
 		
+		stageMenuAttack.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stageMenuAttack.draw();		
 		/*
 		if(attack == 0){
 			if ( enemy_x_position <= 270){
@@ -189,13 +127,6 @@ public class BattleScreen implements Screen{
 	
 	}
 	//CALC COLOR OF LIFE BAR (CRITIC, LOW, GOOD)
-	public String lifeBar(float hp, float maxhp){
-		if(maxhp<hp) System.out.print("Erro: Vida atual superior a vida total");
-		float average = hp/maxhp;
-		if(average > .7) return "hp-good.png";
-		else if(average > .45)return "hp-low.png";
-		else return "hp-crit.png";
-	}
 	
 	@Override
 	public void resize(int width, int height) {
@@ -203,7 +134,6 @@ public class BattleScreen implements Screen{
 
 	@Override
 	public void pause() {
-		music.pause();
 	}
 
 	@Override
@@ -251,7 +181,6 @@ public class BattleScreen implements Screen{
     textButtonStyleQuit.checked = skins.getDrawable("quit");
     textButtonStyleQuit.over = skins.getDrawable("quitselec");
     
-	skin = new Skin();
 	stageMenuAttack = new Stage();
 	batch = new SpriteBatch();
 	img = new Texture("menubackground.png");
@@ -313,19 +242,19 @@ public class BattleScreen implements Screen{
 		
 
   //Moves Buttons--------------------------------------------------------------------------
-	final TextButton move1Button=new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove1);
+	final TextButton move1Button=new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove1);
 	move1Button.setPosition(15, 24);
 	stageMenuAttack.addActor(move1Button);
 	
-	final TextButton move2Button = new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove2);
+	final TextButton move2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove2);
 	move2Button.setPosition(130,24);
 	stageMenuAttack.addActor(move2Button);
 	
-	final TextButton move3Button = new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove3);
+	final TextButton move3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove3);
 	move3Button.setPosition(15,8);
 	stageMenuAttack.addActor(move3Button);
 	
-	final TextButton move4Button = new TextButton(treinador1.getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove4);
+	final TextButton move4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove4);
 	move4Button.setPosition(130,8);
 	stageMenuAttack.addActor(move4Button);
 	
