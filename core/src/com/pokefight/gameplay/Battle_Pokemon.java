@@ -1,8 +1,6 @@
 package com.pokefight.gameplay;
 
 import java.util.ArrayList;
-
-import com.pokejava.Ability;
 import com.pokejava.Move;
 
 public class Battle_Pokemon {
@@ -12,7 +10,7 @@ public class Battle_Pokemon {
 	private int experience;
 	private int attack;
 	private int defense;
-	private int hp;
+	private int hp, currentHP;
 	private ArrayList<Move> moves;
 	
 	public Battle_Pokemon(int id, String name, int level, int experience, int attack, int defense, int hp, ArrayList<Move> moves){
@@ -23,6 +21,7 @@ public class Battle_Pokemon {
 		this.attack = attack;
 		this.defense = defense;
 		this.hp = hp;
+		this.currentHP = hp;
 		this.moves = moves;
 	}
 	
@@ -53,7 +52,11 @@ public class Battle_Pokemon {
 	public int getHp() {
 		return hp;
 	}
-
+	
+	public int getCurrentHP(){
+		return currentHP;
+	}
+	
 	public ArrayList<Move> getMoves() {
 		return moves;
 	}

@@ -1,7 +1,6 @@
 package com.pokefight.resources;
 
 import java.io.UnsupportedEncodingException;
-
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
