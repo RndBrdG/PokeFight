@@ -93,12 +93,8 @@ public class BattleScreen implements Screen{
 			batch.draw(img, 282, 0, 118, 46);
 		batch.end();
 		
-		//this.battle.update(false);
 		batch.enableBlending();
-		battle.getTrainer(true).update();
-		battle.getTrainer(true).draw(batch);
-		battle.getTrainer(false).update();
-		battle.getTrainer(false).draw(batch);
+		battle.draw(batch);
 		
 		stageMenuAttack.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stageMenuAttack.draw();		
