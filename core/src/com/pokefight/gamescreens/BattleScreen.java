@@ -289,14 +289,14 @@ public class BattleScreen implements Screen{
 	move3Button.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-	    	//dispose();
+	    	dispose();
 	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	    };
 	});
 	move4Button.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-	    	//dispose();
+	    	dispose();
 	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	    };
 	});
