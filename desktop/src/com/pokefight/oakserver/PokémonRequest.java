@@ -1,14 +1,14 @@
 package com.pokefight.oakserver;
 
-public class PokémonRequest extends ResourceRequest {
+public class PokÃ©monRequest extends ResourceRequest {
 	private int id;
 	
-	PokémonRequest(int id) {
+	PokÃ©monRequest(int id) {
 		this.id = id;
 		apiPath = "pokemon/" + id;
 	}
 	
-	public int getId() {
+	int getId() {
 		return id;
 	}
 }
