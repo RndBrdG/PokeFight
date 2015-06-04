@@ -274,6 +274,7 @@ public class BattleScreen implements Screen{
 			};
 		});
 		
+
 		move2Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
 				battle.changeAnyAttack();
@@ -290,7 +291,6 @@ public class BattleScreen implements Screen{
 				battle.changeAnyAttack(); 
 			};
 		});
-
 	}
 
 	void pokeList(){
