@@ -37,8 +37,8 @@ tmp/
 *.bak
 *.swp
 *~.nib
-.classpath
-*/.classpath
+#.classpath
+#*/.classpath
 local.properties
 .settings/
 .loadpath
