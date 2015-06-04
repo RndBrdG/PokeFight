@@ -255,46 +255,38 @@ public class BattleScreen implements Screen{
 		move1Button.setPosition(15, 24);
 		stageMenuLeft.addActor(move1Button);
 
-		final TextButton move2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove2);
+		final TextButton move2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(1).getName().trim(),textButtonStyleMove2);
 		move2Button.setPosition(130,24);
 		stageMenuLeft.addActor(move2Button);
 
-		final TextButton move3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove3);
+		final TextButton move3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(2).getName().trim(),textButtonStyleMove3);
 		move3Button.setPosition(15,8);
 		stageMenuLeft.addActor(move3Button);
 
-		final TextButton move4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove4);
+		final TextButton move4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(3).getName().trim(),textButtonStyleMove4);
 		move4Button.setPosition(130,8);
 		stageMenuLeft.addActor(move4Button);
-		move1Button.addListener(new PokeListener(battle) {
+		
+		move1Button.addListener( new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				// When you click the button it will print this value you assign.
-				// That way you will know 'which' button was clicked and can perform
-				// the correct action based on it.
+				System.out.println("regerg");
 				Gdx.app.log("button", "clicked ");  
 			};
 		});
+		
 		move2Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				// When you click the button it will print this value you assign.
-				// That way you will know 'which' button was clicked and can perform
-				// the correct action based on it.
 				Gdx.app.log("button", "clicked ");  
 			};
 		});
+		
 		move3Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				// When you click the button it will print this value you assign.
-				// That way you will know 'which' button was clicked and can perform
-				// the correct action based on it.
 				Gdx.app.log("button", "clicked ");  
 			};
 		});
 		move4Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				// When you click the button it will print this value you assign.
-				// That way you will know 'which' button was clicked and can perform
-				// the correct action based on it.
 				Gdx.app.log("button", "clicked ");  
 			};
 		});
