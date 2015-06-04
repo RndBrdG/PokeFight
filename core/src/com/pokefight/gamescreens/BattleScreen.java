@@ -38,7 +38,7 @@ public class BattleScreen implements Screen{
 	
 	private final Texture battlefield;
 	//MENUATTACK
-	 private TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleMove4, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
+	 private TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleMove4, textButtonStylePoke1, textButtonStylePoke2, textButtonStylePoke3, textButtonStylePoke4, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
 	 private Skin skins;
 	 private TextureAtlas buttonAtlas;
 	 private Stage stages;
@@ -210,12 +210,14 @@ public class BattleScreen implements Screen{
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 	    	//((Game)Gdx.app.getApplicationListener()).setScreen(new BattleScreen());
+	    	moves();
 	    };
 	});
 	pokeButton.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 	    	//Gdx.app.exit();
+	    	pokeList();
 	    };
 	});
 	quitButton.addListener( new ClickListener() {              
@@ -226,6 +228,9 @@ public class BattleScreen implements Screen{
 	    };
 	});
 	
+	}
+	
+	void moves(){
 	
 	//Moves Styles------------------------------------------------------------------------
  	textButtonStyleMove1 = new TextButtonStyle();
@@ -284,10 +289,72 @@ public class BattleScreen implements Screen{
 	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	    };
 	});
-	
+
 	}
 	
 	
+
+void pokeList(){
+
+//Poke Styles------------------------------------------------------------------------
+ 	textButtonStylePoke1 = new TextButtonStyle();
+    textButtonStylePoke1.font = font12;
+    
+    textButtonStylePoke2 = new TextButtonStyle();
+    textButtonStylePoke2.font = font12;
+   
+    textButtonStylePoke3 = new TextButtonStyle();
+    textButtonStylePoke3.font = font12;
+    
+    textButtonStylePoke4 = new TextButtonStyle();
+    textButtonStylePoke4.font = font12;
+		
+
+  //Poke Buttons--------------------------------------------------------------------------
+	final TextButton poke1Button=new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke1);
+	poke1Button.setPosition(15, 24);
+	stageMenuAttack.addActor(poke1Button);
+	
+	final TextButton poke2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke2);
+	poke2Button.setPosition(130,24);
+	stageMenuAttack.addActor(poke2Button);
+	
+	final TextButton poke3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke3);
+	poke3Button.setPosition(15,8);
+	stageMenuAttack.addActor(poke3Button);
+	
+	final TextButton poke4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke4);
+	poke4Button.setPosition(130,8);
+	stageMenuAttack.addActor(poke4Button);
+	
+	poke1Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	//((Game)Gdx.app.getApplicationListener()).setScreen(new BattleScreen());
+	    };
+	});
+	poke2Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	//Gdx.app.exit();
+	    };
+	});
+	poke3Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	//dispose();
+	    	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+	    };
+	});
+	poke4Button.addListener( new ClickListener() {              
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+	    	//dispose();
+	    	//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+	    };
+	});
+}
+
 	    
 	   
 		
