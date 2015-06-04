@@ -2,8 +2,10 @@ package com.pokefight.gamescreens;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -43,7 +45,7 @@ public class BattleScreen implements Screen{
 	 private TextureAtlas buttonAtlas;
 	 private Stage stages;
 	 private BitmapFont font;
-	 private Stage stageMenuAttack;
+	 private Stage stageMenuLeft, stageMenuRight;
 	 private Texture img;
 	 //MOVES
 	 ArrayList <String> moves;
@@ -96,8 +98,12 @@ public class BattleScreen implements Screen{
 		batch.enableBlending();
 		battle.draw(batch);
 		
-		stageMenuAttack.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stageMenuAttack.draw();		
+		stageMenuLeft.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stageMenuLeft.draw();	
+		
+		stageMenuRight.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stageMenuRight.draw();	
+		
 		/*
 		if(attack == 0){
 			if ( enemy_x_position <= 270){
@@ -177,35 +183,42 @@ public class BattleScreen implements Screen{
     textButtonStyleQuit.checked = skins.getDrawable("quit");
     textButtonStyleQuit.over = skins.getDrawable("quitselec");
     
-	stageMenuAttack = new Stage();
+
+    stageMenuLeft = new Stage();
+    stageMenuRight = new Stage();
 	batch = new SpriteBatch();
 	img = new Texture("menubackground.png");
 	
-	Gdx.input.setInputProcessor(stageMenuAttack);
-
+	InputMultiplexer multi = new InputMultiplexer();
+	multi.addProcessor(stageMenuLeft);
+	multi.addProcessor(stageMenuRight);
+	
+	Gdx.input.setInputProcessor(multi);
+	
 	//Menu Options Buttons--------------------------------------------------------
 	final TextButton fightButton=new TextButton("",textButtonStyleFight);
 	fightButton.setPosition(296, 24);
 	fightButton.setHeight(13);
 	fightButton.setWidth(40);
-	stageMenuAttack.addActor(fightButton);
+	stageMenuRight.addActor(fightButton);
 	
 	final TextButton pokeButton = new TextButton("",textButtonStylePoke);
 	pokeButton.setPosition(296,8);
 	pokeButton.setHeight(13);
 	pokeButton.setWidth(51);
-	stageMenuAttack.addActor(pokeButton);
+	stageMenuRight.addActor(pokeButton);
 	
 	final TextButton quitButton = new TextButton("",textButtonStyleQuit);
 	quitButton.setPosition(357,8);
 	quitButton.setHeight(13);
 	quitButton.setWidth(34);
-	stageMenuAttack.addActor(quitButton);
+	stageMenuRight.addActor(quitButton);
 	
 	fightButton.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 	    	//((Game)Gdx.app.getApplicationListener()).setScreen(new BattleScreen());
+	    	stageMenuLeft.clear();
 	    	moves();
 	    };
 	});
@@ -213,6 +226,7 @@ public class BattleScreen implements Screen{
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
 	    	//Gdx.app.exit();
+	    	stageMenuLeft.clear();
 	    	pokeList();
 	    };
 	});
@@ -241,23 +255,24 @@ public class BattleScreen implements Screen{
     textButtonStyleMove4 = new TextButtonStyle();
     textButtonStyleMove4.font = font12;
 		
+    
 
   //Moves Buttons--------------------------------------------------------------------------
 	final TextButton move1Button=new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove1);
 	move1Button.setPosition(15, 24);
-	stageMenuAttack.addActor(move1Button);
+	stageMenuLeft.addActor(move1Button);
 	
 	final TextButton move2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove2);
 	move2Button.setPosition(130,24);
-	stageMenuAttack.addActor(move2Button);
+	stageMenuLeft.addActor(move2Button);
 	
 	final TextButton move3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove3);
 	move3Button.setPosition(15,8);
-	stageMenuAttack.addActor(move3Button);
+	stageMenuLeft.addActor(move3Button);
 	
 	final TextButton move4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove4);
 	move4Button.setPosition(130,8);
-	stageMenuAttack.addActor(move4Button);
+	stageMenuLeft.addActor(move4Button);
 	
 	move1Button.addListener( new ClickListener() {              
 	    @Override
@@ -274,14 +289,14 @@ public class BattleScreen implements Screen{
 	move3Button.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-	    	dispose();
+	    	//dispose();
 	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	    };
 	});
 	move4Button.addListener( new ClickListener() {              
 	    @Override
 	    public void clicked(InputEvent event, float x, float y) {
-	    	dispose();
+	    	//dispose();
 	    	((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	    };
 	});
@@ -309,19 +324,19 @@ void pokeList(){
   //Poke Buttons--------------------------------------------------------------------------
 	final TextButton poke1Button=new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke1);
 	poke1Button.setPosition(15, 24);
-	stageMenuAttack.addActor(poke1Button);
+	stageMenuLeft.addActor(poke1Button);
 	
 	final TextButton poke2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke2);
 	poke2Button.setPosition(130,24);
-	stageMenuAttack.addActor(poke2Button);
+	stageMenuLeft.addActor(poke2Button);
 	
 	final TextButton poke3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke3);
 	poke3Button.setPosition(15,8);
-	stageMenuAttack.addActor(poke3Button);
+	stageMenuLeft.addActor(poke3Button);
 	
 	final TextButton poke4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke4);
 	poke4Button.setPosition(130,8);
-	stageMenuAttack.addActor(poke4Button);
+	stageMenuLeft.addActor(poke4Button);
 	
 	poke1Button.addListener( new ClickListener() {              
 	    @Override
@@ -350,11 +365,6 @@ void pokeList(){
 	    };
 	});
 }
-
-	    
-	   
-		
-		
 
 
 }
