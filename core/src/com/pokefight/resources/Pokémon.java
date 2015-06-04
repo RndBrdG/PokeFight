@@ -1,14 +1,9 @@
 package com.pokefight.resources;
 
-<<<<<<< HEAD
-@SuppressWarnings("unused")
-=======
 import java.io.UnsupportedEncodingException;
-
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
->>>>>>> origin/master
 public class Pokémon {
 	private int id;
 	private String name;
