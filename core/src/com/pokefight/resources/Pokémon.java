@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Pokémon {
-	private int id;
-	private String name;
-	private Texture sprite;
-	private int maxHp;
+	private final int id;
+	private final String name;
+	private final Texture sprite;
+	private final int maxHp;
 
 	public Pokémon(int id, String name, String sprite, int maxHp) {
 		this.id = id;

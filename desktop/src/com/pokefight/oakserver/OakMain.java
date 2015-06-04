@@ -78,7 +78,7 @@ public class OakMain {
 						jsonParameters.put("hp", new Integer(maxHp).toString());
 						JSONObject newPokemonJson = new JSONObject(jsonParameters);
 						
-						postToHttp("pokemon/" + id, newPokemonJson);
+						postToHttp(req.getApiPath(), newPokemonJson);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -101,7 +101,7 @@ public class OakMain {
 					try {
 						JSONObject jsonResp = resp.getResponse();
 
-						id = jsonResp.getInt("moveid");
+						id = jsonResp.getInt("moveId");
 						name = jsonResp.getString("name");
 						power = jsonResp.getInt("power");
 					} catch (OakServerException e) {
@@ -110,7 +110,7 @@ public class OakMain {
 						power = newMove.getPower();
 						
 						Map<String, String> jsonParameters = new HashMap<String, String>();
-						jsonParameters.put("moveid", new Integer(id).toString());
+						jsonParameters.put("moveId", new Integer(id).toString());
 						jsonParameters.put("name", name);
 						jsonParameters.put("power", new Integer(power).toString());
 						JSONObject newMoveJson = new JSONObject(jsonParameters);
@@ -152,8 +152,7 @@ public class OakMain {
 						jsonParameters.put("power", new Integer(power).toString());
 						JSONObject newMoveJson = new JSONObject(jsonParameters);
 						
-						postToHttp(req.getApiPath(), newMoveJson);
-					
+						postToHttp(req.getApiPath(), newMoveJson);					
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
