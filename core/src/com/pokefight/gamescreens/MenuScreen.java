@@ -2,6 +2,7 @@ package com.pokefight.gamescreens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class MenuScreen implements Screen{
+public class MenuScreen implements Screen,TextInputListener{
 	private Stage stage;
 	private Texture img;
 	private Skin skin;
@@ -28,7 +29,7 @@ public class MenuScreen implements Screen{
 	TextureAtlas buttonAtlas;
 
 
-	public MenuScreen(){
+	public MenuScreen() {
 		stages = new Stage();
 		Gdx.input.setInputProcessor(stages);
 		font = new BitmapFont();
@@ -99,13 +100,6 @@ public class MenuScreen implements Screen{
 
 	}
 
-
-
-
-
-
-
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
@@ -138,6 +132,19 @@ public class MenuScreen implements Screen{
 	public void dispose() {
 		stage.dispose();
 		skin.dispose();
+	}
+
+	@Override
+	public void input(String text) {
+		String iP = text;
+		System.out.println(iP);
+		
+	}
+
+	@Override
+	public void canceled() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
