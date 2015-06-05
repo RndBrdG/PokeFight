@@ -4,8 +4,8 @@ public class MoveRequest extends ResourceRequest {
 	private final int id;
 	
 	MoveRequest(int id) {
+		super("move/" + id);
 		this.id = id;
-		apiPath = "move/" + id;
 	}
 	
 	int getId() {

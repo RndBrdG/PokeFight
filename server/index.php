@@ -100,9 +100,9 @@
 		
 		$query = $db->prepare('SELECT * FROM Pokemon WHERE pkmnId = ? LIMIT 1');
 		$query->execute(array($pkmnId));
-		$pokemon = $query->fetchAll();
+		$pokemon = $query->fetch();
 		
-		if (!empty($pokemon)) echo json_encode($pokemon));
+		if (!empty($pokemon)) echo json_encode($pokemon);
 		else header('HTTP/1.0 404 Not Found');
 	});
 	
@@ -151,7 +151,7 @@
 	
 	/* Remover uma jogada de um Pokémon */
 	$app->delete('/api/pokemon/:pkmnId/moves/:moveId', function($pkmnId, $moveId) {
-		if (!pkmnExists($pkmnId) || !moveExists($moveId) {
+		if (!pkmnExists($pkmnId) || !moveExists($moveId)) {
 			header('HTTP/1.0 404 Not Found');
 			die();
 		}
@@ -168,9 +168,9 @@
 		
 		$query = $db->prepare('SELECT * FROM Move WHERE moveId = ? LIMIT 1');
 		$query->execute(array($moveId));
-		$move = $query->fetchAll();
+		$move = $query->fetch();
 		
-		if (!empty($move)) echo json_encode($move));
+		if (!empty($move)) echo json_encode($move);
 		else header('HTTP/1.0 404 Not Found');
 	});
 	

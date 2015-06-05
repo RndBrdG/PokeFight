@@ -4,8 +4,8 @@ public class PokémonRequest extends ResourceRequest {
 	private final int id;
 	
 	PokémonRequest(int id) {
+		super("pokemon/" + id);
 		this.id = id;
-		apiPath = "pokemon/" + id;
 	}
 	
 	int getId() {
