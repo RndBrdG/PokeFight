@@ -5,15 +5,20 @@ import java.awt.image.DataBufferByte;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.imageio.ImageIO;
+
 import org.apache.http.HttpStatus;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Response;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -44,7 +49,7 @@ public class OakMain {
 					ResourceResponse resp = new ResourceResponse(req);
 
 					try {
-						JSONObject jsonResp = resp.getResponse();
+						JSONObject jsonResp = resp.getResponseObject();
 
 						id = jsonResp.getInt("pkmnId");
 						name = jsonResp.getString("name");
@@ -99,7 +104,7 @@ public class OakMain {
 					ResourceResponse resp = new ResourceResponse(req);
 
 					try {
-						JSONObject jsonResp = resp.getResponse();
+						JSONObject jsonResp = resp.getResponseObject();
 
 						id = jsonResp.getInt("moveId");
 						name = jsonResp.getString("name");
@@ -116,10 +121,10 @@ public class OakMain {
 						JSONObject newMoveJson = new JSONObject(jsonParameters);
 						
 						postToHttp(req.getApiPath(), newMoveJson);
-					
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					
 					conn.sendUDP(new Move(id, name, power));
 				}
 			}
@@ -127,36 +132,41 @@ public class OakMain {
 		
 		server.addListener(new Listener() {
 			public void receive(Connection conn, Object obj) {
-				if (obj instanceof MoveRequest) {
-					int id = 0;
-					String name = "";
-					int power = 0;
-
-					MoveRequest req = (MoveRequest) obj;
+				if (obj instanceof PokemonMoveRequest) {
+					ArrayList<com.pokefight.resources.Move> pokemonMoves = new ArrayList<com.pokefight.resources.Move>();
+					
+					PokemonMoveRequest req = (PokemonMoveRequest) obj;
 					ResourceResponse resp = new ResourceResponse(req);
 
 					try {
-						JSONObject jsonResp = resp.getResponse();
+						JSONArray jsonResp = resp.getResponseArray();
 
-						id = jsonResp.getInt("moveid");
-						name = jsonResp.getString("name");
-						power = jsonResp.getInt("power");
-					} catch (OakServerException e) {
-						Move newMove = new com.pokejava.Move(req.getId());
-						name = newMove.getName();
-						power = newMove.getPower();
-						
-						Map<String, String> jsonParameters = new HashMap<String, String>();
-						jsonParameters.put("moveid", new Integer(id).toString());
-						jsonParameters.put("name", name);
-						jsonParameters.put("power", new Integer(power).toString());
-						JSONObject newMoveJson = new JSONObject(jsonParameters);
-						
-						postToHttp(req.getApiPath(), newMoveJson);					
+						for (int i = 0; i < jsonResp.length(); ++i) {
+							JSONObject moveJson = jsonResp.getJSONObject(i);
+							
+							int moveId = moveJson.getInt("moveId");
+							String name = moveJson.getString("name");
+							int power = moveJson.getInt("power");
+							
+							pokemonMoves.add(new com.pokefight.resources.Move(moveId, name, power));
+						}
+					} catch (OakServerException e) { // TODO: Buscar move à Pokeapi
+//						Move newMove = new com.pokejava.Move(req.getId());
+//						name = newMove.getName();
+//						power = newMove.getPower();
+//						
+//						Map<String, String> jsonParameters = new HashMap<String, String>();
+//						jsonParameters.put("moveId", new Integer(id).toString());
+//						jsonParameters.put("name", name);
+//						jsonParameters.put("power", new Integer(power).toString());
+//						JSONObject newMoveJson = new JSONObject(jsonParameters);
+//						
+//						postToHttp(req.getApiPath(), newMoveJson);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					conn.sendUDP(new Move(id, name, power));
+					
+					conn.sendUDP(0/*new Move(id, name, power)*/); // TODO
 				}
 			}
 		});
