@@ -1,6 +1,6 @@
 package com.pokefight.oakserver;
 
-abstract class ResourceRequest {
+public abstract class ResourceRequest {
 	protected String apiPath;
 	
 	ResourceRequest(String apiPath) {

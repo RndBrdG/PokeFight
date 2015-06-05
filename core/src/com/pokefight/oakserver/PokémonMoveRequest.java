@@ -1,9 +1,9 @@
 package com.pokefight.oakserver;
 
-public class PokemonMoveRequest extends ResourceRequest {
+public class PokémonMoveRequest extends ResourceRequest {
 	private final int pokemonId;
 	
-	PokemonMoveRequest(int pokemonId) {
+	PokémonMoveRequest(int pokemonId) {
 		super("pokemon/" + pokemonId + "/moves");
 		this.pokemonId = pokemonId;
 	}

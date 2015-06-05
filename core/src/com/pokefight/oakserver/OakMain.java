@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -30,19 +31,41 @@ import com.pokejava.Sprite;
 public class OakMain {
 	public static void main(String[] args) {
 		Server server = new Server();
-		server.start();
+
+		Kryo kryo = server.getKryo();
+		kryo.register(PokémonRequest.class);
+	    kryo.register(Pokémon.class);
+		kryo.register(MoveRequest.class);
+	    kryo.register(com.pokefight.resources.Move.class);
+		kryo.register(PokémonMoveRequest.class);
+		kryo.register(ArrayList.class);
+		
 		try {
+			server.start();
 			server.bind(54555, 54777);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		server.addListener(new Listener() {
-			public void receive(Connection conn, Object obj) {
+			@Override
+			public void connected(Connection conn) {
+				System.out.println("[OakServer] Ligado!");
+			}
+			@Override
+			public void disconnected(Connection conn) {
+				System.out.println("[OakServer] Desligado.");
+			}
+			@Override
+			public void received(Connection conn, Object obj) {
+				System.out.println("[OakServer] Recebeu " + obj.getClass());
+
 				if (obj instanceof PokémonRequest) {
 					int id = 0;
 					String name = "";
 					String sprite = "";
+					int attack = 0;
+					int defense = 0;
 					int maxHp = 0;
 
 					PokémonRequest req = (PokémonRequest) obj;
@@ -54,12 +77,16 @@ public class OakMain {
 						id = jsonResp.getInt("pkmnId");
 						name = jsonResp.getString("name");
 						sprite = jsonResp.getString("sprite");
-						maxHp = jsonResp.getInt("hp");
+						attack = jsonResp.getInt("attack");
+						defense = jsonResp.getInt("defense");
+						maxHp = jsonResp.getInt("maxHp");
 					} catch (OakServerException e) {
 						id = req.getId();
 						Pokemon newPokemon = new Pokemon(id);
 						name = newPokemon.getName();
 						Sprite newPokemonSprite = new Sprite(id);
+						attack = newPokemon.getAttack();
+						defense = newPokemon.getDefense();
 						maxHp = newPokemon.getHP();
 
 						BufferedImage spriteImg = null;
@@ -80,7 +107,9 @@ public class OakMain {
 						jsonParameters.put("pkmnId", new Integer(id).toString());
 						jsonParameters.put("name", name);
 						jsonParameters.put("sprite", sprite);
-						jsonParameters.put("hp", new Integer(maxHp).toString());
+						jsonParameters.put("attack", new Integer(attack).toString());
+						jsonParameters.put("defense", new Integer(defense).toString());						
+						jsonParameters.put("maxHp", new Integer(maxHp).toString());
 						JSONObject newPokemonJson = new JSONObject(jsonParameters);
 
 						postToHttp(req.getApiPath(), newPokemonJson);
@@ -88,14 +117,9 @@ public class OakMain {
 						e.printStackTrace();
 					}
 
-					conn.sendUDP(new Pokémon(id, name, sprite, maxHp));
-				}
-			}
-		});
-
-		server.addListener(new Listener() {
-			public void receive(Connection conn, Object obj) {
-				if (obj instanceof MoveRequest) {
+					conn.sendUDP(new Pokémon(id, name, sprite, attack, defense, maxHp));
+					return;
+				} else if (obj instanceof MoveRequest) {
 					int id = 0;
 					String name = "";
 					int power = 0;
@@ -125,17 +149,12 @@ public class OakMain {
 						e.printStackTrace();
 					}
 
-					conn.sendUDP(new Move(id, name, power));
-				}
-			}
-		});
-
-		server.addListener(new Listener() {
-			public void receive(Connection conn, Object obj) {
-				if (obj instanceof PokemonMoveRequest) {
+					conn.sendUDP(new com.pokefight.resources.Move(id, name, power));
+					return;
+				} else if (obj instanceof PokémonMoveRequest) {
 					ArrayList<Integer> pokemonMoves = new ArrayList<Integer>();
 
-					PokemonMoveRequest req = (PokemonMoveRequest) obj;
+					PokémonMoveRequest req = (PokémonMoveRequest) obj;
 					ResourceResponse resp = new ResourceResponse(req);
 
 					try {
@@ -153,7 +172,7 @@ public class OakMain {
 							int moveId = move.getID();
 							pokemonMoves.add(moveId);
 						}
-						
+
 						for (Integer moveId : pokemonMoves) {
 							Map<String, String> moveJsonMap = new HashMap<String, String>();
 							moveJsonMap.put(new Integer(req.getPokemonId()).toString(), moveId.toString());
@@ -163,8 +182,9 @@ public class OakMain {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					
+
 					conn.sendUDP(pokemonMoves);
+					return;
 				}
 			}
 		});

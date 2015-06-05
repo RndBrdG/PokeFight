@@ -8,14 +8,14 @@ import org.apache.http.client.fluent.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-class ResourceResponse {
+public class ResourceResponse {
 	private ResourceRequest req;
 	
 	ResourceResponse(ResourceRequest req) {
 		this.req = req;
 	}
 	
-	JSONObject getResponseObject() throws OakServerException {		
+	public JSONObject getResponseObject() throws OakServerException {		
 		try {
 			Response serverResponse = Request.Get("localhost/api/" + req.getApiPath()).execute();
 			if (serverResponse.returnResponse().getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND)
@@ -29,7 +29,7 @@ class ResourceResponse {
 		return null;
 	}
 	
-	JSONArray getResponseArray() throws OakServerException {		
+	public JSONArray getResponseArray() throws OakServerException {		
 		try {
 			Response serverResponse = Request.Get("localhost/api/" + req.getApiPath()).execute();
 			if (serverResponse.returnResponse().getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND)

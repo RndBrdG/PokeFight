@@ -108,15 +108,15 @@
 	
 	/* Adicionar um Pokémon */
 	$app->post('/api/pokemon', function($pkmnId) {
-		if (!isset($_POST['pkmnId']) || !isset($_POST['name']) || !isset($_POST['sprite']) || !isset($_POST['hp'])) {
+		if (!isset($_POST['pkmnId']) || !isset($_POST['name']) || !isset($_POST['sprite']) || !isset($_POST['attack']) || !isset($_POST['defense']) || !isset($_POST['maxHp'])) {
 			header('HTTP/1.0 404 Not Found');
 			die();
 		}
 		
 		require 'db.php';
 		
-		$query = $db->prepare('INSERT INTO Pokemon (pkmnId, name, sprite) VALUES (?, ?, ?, ?)');
-		$query->execute(array($_POST['pkmnId'], $_POST['name'], $_POST['sprite'], $_POST['hp']));
+		$query = $db->prepare('INSERT INTO Pokemon (pkmnId, name, sprite, attack, defense, maxHp) VALUES (?, ?, ?, ?)');
+		$query->execute(array($_POST['pkmnId'], $_POST['name'], $_POST['sprite'], $_POST['attack'], $_POST['defense'], $_POST['maxHp']));
 	});
 	
 	/* Obter as jogadas de um Pokémon */
