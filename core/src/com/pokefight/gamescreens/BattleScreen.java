@@ -36,6 +36,8 @@ public class BattleScreen implements Screen{
 	private final TextureRegion dialogboxtextreg;
 	BitmapFont font12;
 	private final Texture battlefield;
+	private final Texture currentPlayer, nextPlayer;
+	private final TextureRegion current_pokemonStatusTextureRegion, next_pokemonStatusTextureRegion;
 	//MENUATTACK
 
 	private TextButtonStyle textButtonStyleMove1, textButtonStyleMove2, textButtonStyleMove3, textButtonStyleMove4, textButtonStylePoke1, textButtonStylePoke2, textButtonStylePoke3, textButtonStylePoke4, textButtonStyleFight,textButtonStylePoke,textButtonStyleQuit;
@@ -72,9 +74,13 @@ public class BattleScreen implements Screen{
 		music = Gdx.audio.newMusic(Gdx.files.internal("music/battle.mp3"));
 		music.play();
 		music.setLooping(true); 
-
+		
+		nextPlayer = new Texture("media/img/hp-foe.png");
+		currentPlayer = new Texture("media/img/hp-me.png");
+		current_pokemonStatusTextureRegion = new TextureRegion(currentPlayer);
+		next_pokemonStatusTextureRegion = new TextureRegion(nextPlayer);
+		
 		menuButtons();
-
 	}
 
 	@Override
@@ -94,8 +100,12 @@ public class BattleScreen implements Screen{
 		batch.end();
 
 		batch.enableBlending();
+		batch.begin();
+		batch.draw(next_pokemonStatusTextureRegion, 0, 180, 50, 50, 122, 33, 1, 1, 0);
+		batch.draw(current_pokemonStatusTextureRegion, 272, 50, 50, 50, 128, 42, 1, 1, 0);
+		batch.end();
 		battle.draw(batch);
-
+		
 		stageMenuLeft.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stageMenuLeft.draw();	
 

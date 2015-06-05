@@ -22,11 +22,10 @@ public class Trainer {
 	private boolean adversario;
 	
 	private Sprite pokemon;
-	private Texture pokemonTexture, pokemonStatus, currentHP = new Texture("media/img/hp-good.png");
-	private TextureRegion pokemonTextureRegion, pokemonStatusTextureRegion, currentHPTextureRegion;
+	private Texture pokemonTexture, currentHP = new Texture("media/img/hp-good.png");
+	private TextureRegion pokemonTextureRegion, currentHPTextureRegion;
 	
 	private float x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon;
-	private float x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, scaleX_status;
 	private float x_position_font, y_position_font;
 	private float x_position_barHP, y_position_barHP;
 	
@@ -126,10 +125,6 @@ public class Trainer {
 			pokemon = new Sprite(this.activePokemon().getId() + 1);
 			pokemonTexture = new Texture("." + pokemon.getImage());
 			pokemonTextureRegion = new TextureRegion(pokemonTexture);
-			if (adversario)
-				pokemonStatus = new Texture("media/img/hp-foe.png");
-			else pokemonStatus = new Texture("media/img/hp-me.png");
-			pokemonStatusTextureRegion = new TextureRegion(pokemonStatus);
 			currentHPTextureRegion = new TextureRegion(currentHP);
 			currentHP = new Texture("media/img/hp-good.png");
 		}
@@ -139,10 +134,6 @@ public class Trainer {
 			x_origin_pokemon = 130; y_origin_pokemon = 130;
 			width_pokemon = 130; height_pokemon = 130;
 			scaleX_pokemon = 1;
-			// status
-			x_position_status = 0; y_position_status = 180;
-			x_origin_status = 50; y_origin_status = 50;
-			width_status = 122; height_status = 33;
 			// name
 			x_position_font = 5; y_position_font = 205;
 			// hp
@@ -153,10 +144,6 @@ public class Trainer {
 			x_origin_pokemon = 50; y_origin_pokemon = 50;
 			width_pokemon = 100; height_pokemon = 100;
 			scaleX_pokemon = -1;
-			// status
-			x_position_status = 272; y_position_status = 50;
-			x_origin_status = 50; y_origin_status = 50;
-			width_status = 128; height_status = 42;
 			// name
 			x_position_font = 300; y_position_font = 83;
 			// hp
@@ -177,7 +164,6 @@ public class Trainer {
 	public void draw(SpriteBatch batch){
 			batch.begin();
 			batch.draw(pokemonTextureRegion, x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon, 1, 0);
-			batch.draw(pokemonStatusTextureRegion, x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, 1, 1, 0);
 			batch.draw(currentHPTextureRegion, x_position_barHP, y_position_barHP, 50, 50, (this.activePokemon().getCurrentHP()*48)/this.activePokemon().getHp(), 2, 1, 1, 0);
 			font12.draw(batch, this.activePokemon().getName(), x_position_font, y_position_font);	
 			batch.end();
@@ -208,6 +194,16 @@ public class Trainer {
 			return true;
 		}
 	}
-
 	
+	public void reverseAdversario(){
+		this.adversario = !adversario;
+	}
+	
+	public boolean equals(Object j){
+		if (j == null || getClass() != j.getClass()) return false;
+		
+		Trainer t = (Trainer) j;
+		
+		return t.getNickname().equals(this.getNickname());
+	}
 }

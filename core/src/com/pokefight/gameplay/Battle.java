@@ -19,7 +19,7 @@ public class Battle {
 	
 	public Battle(int maxWaitTime) {
 		jogador1 = new Trainer("ASH", false);
-		jogador2 = new Trainer("Gary", true);
+		jogador2 = new Trainer("GARY", true);
 		actualPlayer = jogador1;
 		anyAttack = false;
 		this.maxWaitTime = maxWaitTime;
@@ -35,10 +35,10 @@ public class Battle {
 	}
 	
 	public void draw(SpriteBatch batch){
-		getTrainer(true).update();
-		getTrainer(true).draw(batch);
-		getTrainer(false).update();
-		getTrainer(false).draw(batch);
+			getTrainer(true).update();
+			getTrainer(true).draw(batch);
+			getTrainer(false).update();
+			getTrainer(false).draw(batch);
 	}
 	
 	public void match(float delta){
@@ -55,10 +55,12 @@ public class Battle {
 					// GET THE ATTACK MOVE
 					//System.out.println("Atacar Jogador 2");
 					nextMove(jogador2, 20);
+					tradePlayer();
 				} else {
 					// GET THE ATTACK MOVE
 					System.out.println("Atacar Jogador 1");
 					nextMove(jogador1, 20);
+					tradePlayer();
 				}
 			}
 		}
@@ -94,5 +96,17 @@ public class Battle {
 	public Trainer getJogadorAlvo(){
 		if (jogador1.equals(actualPlayer)) return jogador2;
 		else return jogador1;
+	}
+	
+	public void tradePlayer(){
+		if (jogador1.equals(this.actualPlayer)){
+			jogador1.reverseAdversario();
+			jogador2.reverseAdversario();
+			actualPlayer = jogador2;
+		}else {
+			jogador1.reverseAdversario();
+			jogador2.reverseAdversario();
+			actualPlayer = jogador1;
+		}
 	}
 }
