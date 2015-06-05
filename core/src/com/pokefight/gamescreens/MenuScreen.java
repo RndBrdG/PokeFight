@@ -57,8 +57,6 @@ public class MenuScreen implements Screen,TextInputListener{
 
 		Gdx.input.setInputProcessor(stage);
 
-
-
 		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
 		/*	TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);

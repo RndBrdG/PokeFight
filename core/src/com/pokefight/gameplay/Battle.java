@@ -14,7 +14,7 @@ public class Battle {
 	
 	private boolean anyAttack;
 	public int damageInt, maxWaitTime;
-	private float initialTime;
+	private float initialTime, nextAttack;
 	private Trainer actualPlayer;
 	
 	public Battle(int maxWaitTime) {
@@ -23,6 +23,10 @@ public class Battle {
 		actualPlayer = jogador1;
 		anyAttack = false;
 		this.maxWaitTime = maxWaitTime;
+	}
+	
+	public void setNextAttack(float value){
+		this.nextAttack = value;
 	}
 	
 	public Trainer getTrainer(boolean adversario){
@@ -42,8 +46,6 @@ public class Battle {
 	}
 	
 	public void match(float delta){
-		//System.out.println("ELAPSED TIME: " + ((initialTime + delta)));
-		//System.out.println("Name: " + jogador2.activePokemon().getName() + " > " + jogador2.activePokemon().getCurrentHP());
 		if (((initialTime + delta)) > maxWaitTime){
 			System.out.println(actualPlayer.getNickname() + " não jogou e, como tal, perdeu!");
 			((Game)Gdx.app.getApplicationListener()).setScreen(new LoadScreen());
@@ -52,14 +54,10 @@ public class Battle {
 			if (anyAttack){
 				initialTime = 0;
 				if (actualPlayer.equals(jogador1)){
-					// GET THE ATTACK MOVE
-					//System.out.println("Atacar Jogador 2");
-					nextMove(jogador2, 20);
+					nextMove(jogador2, nextAttack);
 					tradePlayer();
 				} else {
-					// GET THE ATTACK MOVE
-					System.out.println("Atacar Jogador 1");
-					nextMove(jogador1, 20);
+					nextMove(jogador1, nextAttack);
 					tradePlayer();
 				}
 			}
@@ -108,5 +106,9 @@ public class Battle {
 			jogador2.reverseAdversario();
 			actualPlayer = jogador1;
 		}
+	}
+	
+	public Trainer getActualPlayer(){
+		return this.actualPlayer;
 	}
 }

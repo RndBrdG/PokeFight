@@ -45,7 +45,7 @@ public class BattleScreen implements Screen{
 	private TextureAtlas buttonAtlas;
 	private Stage stages;
 	private BitmapFont font;
-	private Stage stageMenuLeft, stageMenuRight;
+	public Stage stageMenuLeft, stageMenuRight;
 	private Texture img;
 	//MOVES
 	ArrayList <String> moves;
@@ -113,27 +113,6 @@ public class BattleScreen implements Screen{
 		stageMenuRight.draw();	
 		
 		this.battle.match(delta);
-		/*
-		if(attack == 0){
-			if ( enemy_x_position <= 270){
-				enemy_x_position += 0.5;
-				enemy_y_position += 0.2;
-			}else attack++;
-		}
-		else if (attack == 100){
-			if (enemy_x_position > 240){
-				enemy_x_position -= 0.5;
-				enemy_y_position -= 0.2;
-			}else if (enemy_x_position <= 240) {
-				attack = 0;
-				//enemy_x_position = 240;
-				//enemy_y_position = 100;
-			}
-		}
-		else {
-			attack++;
-		}
-		 */
 	}
 
 	@Override
@@ -243,6 +222,8 @@ public class BattleScreen implements Screen{
 				//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 			};
 		});
+
+		stageMenuLeft.clear();
 	}
 
 	void moves(){
@@ -262,45 +243,55 @@ public class BattleScreen implements Screen{
 
 
 		//Moves Buttons--------------------------------------------------------------------------
-		final TextButton move1Button=new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(0).getName().trim(),textButtonStyleMove1);
+		final TextButton move1Button=new TextButton(battle.getActualPlayer().activePokemon().getMoves().get(0).getName().trim(),textButtonStyleMove1);
 		move1Button.setPosition(15, 24);
 		stageMenuLeft.addActor(move1Button);
 
-		final TextButton move2Button = new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(1).getName().trim(),textButtonStyleMove2);
+		final TextButton move2Button = new TextButton(battle.getActualPlayer().activePokemon().getMoves().get(1).getName().trim(),textButtonStyleMove2);
 		move2Button.setPosition(130,24);
 		stageMenuLeft.addActor(move2Button);
 
-		final TextButton move3Button = new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(2).getName().trim(),textButtonStyleMove3);
+		final TextButton move3Button = new TextButton(battle.getActualPlayer().activePokemon().getMoves().get(2).getName().trim(),textButtonStyleMove3);
 		move3Button.setPosition(15,8);
 		stageMenuLeft.addActor(move3Button);
 
-		final TextButton move4Button = new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(3).getName().trim(),textButtonStyleMove4);
+		final TextButton move4Button = new TextButton(battle.getActualPlayer().activePokemon().getMoves().get(3).getName().trim(),textButtonStyleMove4);
 		move4Button.setPosition(130,8);
 		stageMenuLeft.addActor(move4Button);
 		
 		move1Button.addListener( new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
-				battle.changeAnyAttack();  
+				stageMenuLeft.clear();
+				battle.setNextAttack(battle.getActualPlayer().activePokemon().getMoves().get(0).getPower());
+				battle.changeAnyAttack();
 			};
 		});
 		
 
 		move2Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
+				stageMenuLeft.clear();
+				battle.setNextAttack(battle.getActualPlayer().activePokemon().getMoves().get(1).getPower());
 				battle.changeAnyAttack();
 			};
 		});
 		
 		move3Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
+				stageMenuLeft.clear();
+				battle.setNextAttack(battle.getActualPlayer().activePokemon().getMoves().get(2).getPower());
 				battle.changeAnyAttack(); 
 			};
 		});
 		move4Button.addListener(new PokeListener(battle) {
 			@Override public void clicked(InputEvent event, float x, float y) {
+				stageMenuLeft.clear();
+				battle.setNextAttack(battle.getActualPlayer().activePokemon().getMoves().get(3).getPower());
 				battle.changeAnyAttack(); 
 			};
 		});
+
+		
 	}
 
 	void pokeList(){
@@ -318,70 +309,50 @@ public class BattleScreen implements Screen{
 		textButtonStylePoke4 = new TextButtonStyle();
 		textButtonStylePoke4.font = font12;
 
-
 		//Poke Buttons--------------------------------------------------------------------------
-		final TextButton poke1Button=new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke1);
+		final TextButton poke1Button=new TextButton(battle.getActualPlayer().getPokemon(0).getName().trim(),textButtonStylePoke1);
 		poke1Button.setPosition(15, 24);
 		stageMenuLeft.addActor(poke1Button);
 
-		final TextButton poke2Button = new TextButton(battle.getTrainer(true).getPokemon(1).getName().trim(),textButtonStylePoke2);
+		final TextButton poke2Button = new TextButton(battle.getActualPlayer().getPokemon(1).getName().trim(),textButtonStylePoke2);
 		poke2Button.setPosition(130,24);
 		stageMenuLeft.addActor(poke2Button);
 
-		final TextButton poke3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke3);
+		final TextButton poke3Button = new TextButton(battle.getActualPlayer().getPokemon(2).getName().trim(),textButtonStylePoke3);
 		poke3Button.setPosition(15,8);
 		stageMenuLeft.addActor(poke3Button);
 
-		final TextButton poke4Button = new TextButton(battle.getTrainer(true).getPokemon(1).getName().trim(),textButtonStylePoke4);
+		final TextButton poke4Button = new TextButton(battle.getActualPlayer().getPokemon(3).getName().trim(),textButtonStylePoke4);
 		poke4Button.setPosition(130,8);
 		stageMenuLeft.addActor(poke4Button);
 
 		poke1Button.addListener( new PokeListener(battle) {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				battle.getTrainer(false).setCurrentPokemon(0);
+				stageMenuLeft.clear();
+				battle.getActualPlayer().setCurrentPokemon(0);
 			};
 		});
 		poke2Button.addListener( new PokeListener(battle) {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				battle.getTrainer(false).setCurrentPokemon(1);
+				stageMenuLeft.clear();
+				battle.getActualPlayer().setCurrentPokemon(1);
 			};
 		});
 		poke3Button.addListener( new ClickListener() {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//dispose();
-				//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				stageMenuLeft.clear();
+				battle.getActualPlayer().setCurrentPokemon(2);
 			};
 		});
 		poke4Button.addListener( new ClickListener() {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//dispose();
-				//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				stageMenuLeft.clear();
+				battle.getActualPlayer().setCurrentPokemon(3);   //TODO: Selecionar os pokemons corretos
 			};
 		});
 	}
 }
-/*
-if(attack == 0){
-	if ( enemy_x_position <= 270){
-		enemy_x_position += 0.5;
-		enemy_y_position += 0.2;
-	}else attack++;
-}
-else if (attack == 100){
-	if (enemy_x_position > 240){
-		enemy_x_position -= 0.5;
-		enemy_y_position -= 0.2;
-	}else if (enemy_x_position <= 240) {
-		attack = 0;
-		//enemy_x_position = 240;
-		//enemy_y_position = 100;
-	}
-}
-else {
-	attack++;
-}
- */
