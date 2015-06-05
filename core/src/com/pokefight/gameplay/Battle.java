@@ -54,10 +54,10 @@ public class Battle {
 			if (anyAttack){
 				initialTime = 0;
 				if (actualPlayer.equals(jogador1)){
-					nextMove(jogador2, nextAttack);
+					nextMove(jogador2, nextAttack*1.5 - jogador1.activePokemon().getDefense());
 					tradePlayer();
 				} else {
-					nextMove(jogador1, nextAttack);
+					nextMove(jogador1, nextAttack*1.5 - jogador2.activePokemon().getDefense());
 					tradePlayer();
 				}
 			}
@@ -68,11 +68,10 @@ public class Battle {
 	public void nextMove(Trainer to, double damage){
 		to.activePokemon().descreaseActualHP(damage);
 		to.setCurrentHPTextureRegion(new TextureRegion(new Texture("media/img/"+ to.lifeBar(to.activePokemon().getCurrentHP(), to.activePokemon().getHp()))));
-		System.out.println(to.activePokemon().getCurrentHP());
 		if ( to.activePokemon().getCurrentHP() <= 0){
 			if (!to.setCurrentPokemon(to.firstPokemon_not_fainted())){
-				System.out.println("Exiting");
-				Gdx.app.exit();  // TODO: Fim de jogo em condições.
+				System.out.println("Exiting...");
+				Gdx.app.exit();
 			}
 			else {to.setPokemonAtributeNull();
 			}

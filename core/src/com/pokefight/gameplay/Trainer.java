@@ -64,10 +64,7 @@ public class Trainer {
 		for(int i = 1; i<=4;i++){
 			int rand = random.nextInt(150)+1;
 			pokemonsNumbers.add(rand);
-			System.out.println(rand);
 		}
-	
-		// GET POKEMONS FROM DATABASE
 
 		// GET INFORMATION
 		Pokemon firstPokemon = new Pokemon(pokemonsNumbers.get(0));
@@ -101,6 +98,7 @@ public class Trainer {
 		if (!adversario) pokemonAtivo = pokemons.get(0);
 		else pokemonAtivo = pokemons.get(1);
 	}
+	
 
 	public void setPokemonAtributeNull(){
 		this.pokemon = null;
@@ -166,7 +164,6 @@ public class Trainer {
 	public void update(){
 
 		if ( pokemon == null){
-			System.out.println(this.activePokemon().getName());
 			pokemon = new Sprite(this.activePokemon().getId() + 1);
 			pokemonTexture = new Texture("." + pokemon.getImage());
 			pokemonTextureRegion = new TextureRegion(pokemonTexture);

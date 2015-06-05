@@ -2,7 +2,6 @@ package com.pokefight.gamescreens;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -104,6 +103,7 @@ public class BattleScreen implements Screen{
 		batch.draw(next_pokemonStatusTextureRegion, 0, 180, 50, 50, 122, 33, 1, 1, 0);
 		batch.draw(current_pokemonStatusTextureRegion, 272, 50, 50, 50, 128, 42, 1, 1, 0);
 		batch.end();
+		
 		battle.draw(batch);
 		
 		stageMenuLeft.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -111,6 +111,8 @@ public class BattleScreen implements Screen{
 
 		stageMenuRight.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stageMenuRight.draw();	
+
+
 		
 		this.battle.match(delta);
 	}
@@ -202,7 +204,6 @@ public class BattleScreen implements Screen{
 		fightButton.addListener( new ClickListener() {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//((Game)Gdx.app.getApplicationListener()).setScreen(new BattleScreen());
 				stageMenuLeft.clear();
 				moves();
 			};
@@ -210,7 +211,6 @@ public class BattleScreen implements Screen{
 		pokeButton.addListener( new ClickListener() {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//Gdx.app.exit();
 				stageMenuLeft.clear();
 				pokeList();
 			};
@@ -219,7 +219,7 @@ public class BattleScreen implements Screen{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				dispose();
-				//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 			};
 		});
 
@@ -351,7 +351,7 @@ public class BattleScreen implements Screen{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				stageMenuLeft.clear();
-				battle.getActualPlayer().setCurrentPokemon(3);   //TODO: Selecionar os pokemons corretos
+				battle.getActualPlayer().setCurrentPokemon(3);
 			};
 		});
 	}

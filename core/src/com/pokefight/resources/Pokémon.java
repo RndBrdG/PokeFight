@@ -1,13 +1,10 @@
 package com.pokefight.resources;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.pokejava.Move;
 
-public class Pokémon { // TODO: Lista de ataques
+public class Pokémon {
 	private final int id;
 	private final String name;
 	private final Texture sprite;
