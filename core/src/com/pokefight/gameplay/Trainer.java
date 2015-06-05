@@ -102,7 +102,7 @@ public class Trainer {
 	public Battle_Pokemon getPokemon(int id){
 		if (id < 0 || id > 5) { if (firstPokemon_not_fainted() != null) return firstPokemon_not_fainted(); else return null;}
 		else {
-			if (pokemons.get(id).getHp() == 0) { if (firstPokemon_not_fainted() != null) return firstPokemon_not_fainted(); else return null;}
+			if (pokemons.get(id).getHp() <= 0) { if (firstPokemon_not_fainted() != null) return firstPokemon_not_fainted(); else return null;}
 			else return pokemons.get(id);
 		}
 	}
@@ -195,7 +195,16 @@ public class Trainer {
 		if (new_actual == null) return false;
 		else {
 			this.pokemonAtivo = new_actual;
-			System.out.println("Nome : " + pokemonAtivo.getName());
+			return true;
+		}
+	}
+	
+	public boolean setCurrentPokemon(int i){
+		if (this.pokemons.get(i).getCurrentHP() <= 0){
+			 return false;
+		} else {
+			this.pokemon = null;
+			this.pokemonAtivo = this.pokemons.get(i);
 			return true;
 		}
 	}

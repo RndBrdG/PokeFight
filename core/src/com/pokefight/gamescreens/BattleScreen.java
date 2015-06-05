@@ -252,19 +252,19 @@ public class BattleScreen implements Screen{
 
 
 		//Moves Buttons--------------------------------------------------------------------------
-		final TextButton move1Button=new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(0).getName().trim(),textButtonStyleMove1);
+		final TextButton move1Button=new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(0).getName().trim(),textButtonStyleMove1);
 		move1Button.setPosition(15, 24);
 		stageMenuLeft.addActor(move1Button);
 
-		final TextButton move2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(1).getName().trim(),textButtonStyleMove2);
+		final TextButton move2Button = new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(1).getName().trim(),textButtonStyleMove2);
 		move2Button.setPosition(130,24);
 		stageMenuLeft.addActor(move2Button);
 
-		final TextButton move3Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(2).getName().trim(),textButtonStyleMove3);
+		final TextButton move3Button = new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(2).getName().trim(),textButtonStyleMove3);
 		move3Button.setPosition(15,8);
 		stageMenuLeft.addActor(move3Button);
 
-		final TextButton move4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getMoves().get(3).getName().trim(),textButtonStyleMove4);
+		final TextButton move4Button = new TextButton(battle.getTrainer(true).activePokemon().getMoves().get(3).getName().trim(),textButtonStyleMove4);
 		move4Button.setPosition(130,8);
 		stageMenuLeft.addActor(move4Button);
 		
@@ -314,7 +314,7 @@ public class BattleScreen implements Screen{
 		poke1Button.setPosition(15, 24);
 		stageMenuLeft.addActor(poke1Button);
 
-		final TextButton poke2Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke2);
+		final TextButton poke2Button = new TextButton(battle.getTrainer(true).getPokemon(1).getName().trim(),textButtonStylePoke2);
 		poke2Button.setPosition(130,24);
 		stageMenuLeft.addActor(poke2Button);
 
@@ -322,20 +322,20 @@ public class BattleScreen implements Screen{
 		poke3Button.setPosition(15,8);
 		stageMenuLeft.addActor(poke3Button);
 
-		final TextButton poke4Button = new TextButton(battle.getTrainer(true).getPokemon(0).getName().trim(),textButtonStylePoke4);
+		final TextButton poke4Button = new TextButton(battle.getTrainer(true).getPokemon(1).getName().trim(),textButtonStylePoke4);
 		poke4Button.setPosition(130,8);
 		stageMenuLeft.addActor(poke4Button);
 
-		poke1Button.addListener( new ClickListener() {              
+		poke1Button.addListener( new PokeListener(battle) {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//((Game)Gdx.app.getApplicationListener()).setScreen(new BattleScreen());
+				battle.getTrainer(false).setCurrentPokemon(0);
 			};
 		});
-		poke2Button.addListener( new ClickListener() {              
+		poke2Button.addListener( new PokeListener(battle) {              
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//Gdx.app.exit();
+				battle.getTrainer(false).setCurrentPokemon(1);
 			};
 		});
 		poke3Button.addListener( new ClickListener() {              
