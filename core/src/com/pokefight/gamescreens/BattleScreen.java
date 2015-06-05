@@ -52,7 +52,7 @@ public class BattleScreen implements Screen{
 		Random gerador = new Random();
 		int mapa = gerador.nextInt(11) + 1;
 
-		battle = new Battle();
+		battle = new Battle(120);
 		batch = new SpriteBatch();
 
 		dialogbox = new Texture("media/img/dialog-box.png");
@@ -230,7 +230,7 @@ public class BattleScreen implements Screen{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				dispose();
-				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				//((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 			};
 		});
 	}

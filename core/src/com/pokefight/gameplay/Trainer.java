@@ -22,12 +22,13 @@ public class Trainer {
 	private boolean adversario;
 	
 	private Sprite pokemon;
-	private Texture pokemonTexture, pokemonStatus, currentHP;
+	private Texture pokemonTexture, pokemonStatus, currentHP = new Texture("media/img/hp-good.png");
 	private TextureRegion pokemonTextureRegion, pokemonStatusTextureRegion, currentHPTextureRegion;
 	
 	private float x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon;
 	private float x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, scaleX_status;
 	private float x_position_font, y_position_font;
+	private float x_position_barHP, y_position_barHP;
 	
 	BitmapFont font12;
 	
@@ -89,7 +90,7 @@ public class Trainer {
 	 */
 	public Battle_Pokemon firstPokemon_not_fainted(){
 		for(int i = 0; i < pokemons.size(); i++){
-			if (pokemons.get(i).getHp() > 0) {System.out.println("Escolho-te a ti " + pokemons.get(i).getName());return pokemons.get(i);}
+			if (pokemons.get(i).getCurrentHP() > 0) {System.out.println("Escolho-te a ti " + pokemons.get(i).getName());return pokemons.get(i);}
 			else continue;
 		}
 		return null;
@@ -114,6 +115,10 @@ public class Trainer {
 		return this.pokemonAtivo;
 	}
 	
+	public void setHpTexture(Texture tex){
+		currentHP = tex;
+		}
+	
 	public void update(){
 		
 		if ( pokemon == null){
@@ -125,8 +130,8 @@ public class Trainer {
 				pokemonStatus = new Texture("media/img/hp-foe.png");
 			else pokemonStatus = new Texture("media/img/hp-me.png");
 			pokemonStatusTextureRegion = new TextureRegion(pokemonStatus);
-			currentHP = new Texture("media/img/"+ lifeBar(this.activePokemon().getCurrentHP(), this.activePokemon().getHp()));
 			currentHPTextureRegion = new TextureRegion(currentHP);
+			currentHP = new Texture("media/img/hp-good.png");
 		}
 		
 		if (adversario){
@@ -140,6 +145,9 @@ public class Trainer {
 			width_status = 122; height_status = 33;
 			// name
 			x_position_font = 5; y_position_font = 205;
+			// hp
+			x_position_barHP = 50; y_position_barHP = 188;
+			
 		} else {
 			x_position_pokemon = 30; y_position_pokemon = 30;
 			x_origin_pokemon = 50; y_origin_pokemon = 50;
@@ -151,16 +159,26 @@ public class Trainer {
 			width_status = 128; height_status = 42;
 			// name
 			x_position_font = 300; y_position_font = 83;
+			// hp
+			x_position_barHP = 344; y_position_barHP = 66;
 		}
 		
 		
 	}
 	
+	public TextureRegion getCurrentHPTextureRegion() {
+		return currentHPTextureRegion;
+	}
+
+	public void setCurrentHPTextureRegion(TextureRegion currentHPTextureRegion) {
+		this.currentHPTextureRegion = currentHPTextureRegion;
+	}
+
 	public void draw(SpriteBatch batch){
 			batch.begin();
 			batch.draw(pokemonTextureRegion, x_position_pokemon, y_position_pokemon, x_origin_pokemon, y_origin_pokemon, width_pokemon, height_pokemon, scaleX_pokemon, 1, 0);
 			batch.draw(pokemonStatusTextureRegion, x_position_status, y_position_status, x_origin_status, y_origin_status, width_status, height_status, 1, 1, 0);
-			batch.draw(currentHPTextureRegion, 50.f, 188.f, 50, 50, (this.activePokemon().getCurrentHP()/this.activePokemon().getHp())*48, 2, 1, 1, 0);
+			batch.draw(currentHPTextureRegion, x_position_barHP, y_position_barHP, 50, 50, (this.activePokemon().getCurrentHP()*48)/this.activePokemon().getHp(), 2, 1, 1, 0);
 			font12.draw(batch, this.activePokemon().getName(), x_position_font, y_position_font);	
 			batch.end();
 	}
@@ -181,4 +199,6 @@ public class Trainer {
 			return true;
 		}
 	}
+
+	
 }
