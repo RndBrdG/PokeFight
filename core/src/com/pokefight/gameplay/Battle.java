@@ -54,10 +54,14 @@ public class Battle {
 			if (anyAttack){
 				initialTime = 0;
 				if (actualPlayer.equals(jogador1)){
-					nextMove(jogador2, nextAttack*1.5 - jogador1.activePokemon().getDefense());
+					if (nextAttack*1.5 - jogador2.activePokemon().getDefense() < 0)
+						nextMove(jogador2, nextAttack*0.75);
+					else nextMove(jogador2, nextAttack*1.5 - jogador2.activePokemon().getDefense());
 					tradePlayer();
 				} else {
-					nextMove(jogador1, nextAttack*1.5 - jogador2.activePokemon().getDefense());
+					if (nextAttack*1.5 - jogador1.activePokemon().getDefense() < 0)
+						nextMove(jogador1, nextAttack*0.75);
+					else nextMove(jogador1, nextAttack*1.5 - jogador1.activePokemon().getDefense());
 					tradePlayer();
 				}
 			}
