@@ -57,17 +57,6 @@ public class MenuScreen implements Screen,TextInputListener{
 
 		Gdx.input.setInputProcessor(stage);
 
-
-
-		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
-		/*	TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
-		textButtonStyle.checked = skin.newDrawable("white", Color.BLUE);
-		textButtonStyle.over = skin.newDrawable("white", Color.WHITE);
-
-		textButtonStyle.font = skin.getFont("default");*/
-
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
 		final TextButton playButton=new TextButton("",textButtonStylePlay);
 		playButton.setPosition(10, 5);
@@ -109,7 +98,6 @@ public class MenuScreen implements Screen,TextInputListener{
 		batch.end();
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
-		//stage.setDebugAll(true);
 	}
 
 	@Override

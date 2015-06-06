@@ -18,9 +18,7 @@ public class LoadScreen implements Screen{
 		
 			batch = new SpriteBatch();
 			img = new Texture("loading.jpg");
-
-			//((Game)Gdx.app.getApplicationListener()).setScreen(new BattleScreen());
-			
+		
 		
 		Gdx.app.postRunnable(new Runnable() {
 		     @Override

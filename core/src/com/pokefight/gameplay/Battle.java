@@ -14,15 +14,19 @@ public class Battle {
 	
 	private boolean anyAttack;
 	public int damageInt, maxWaitTime;
-	private float initialTime;
+	private float initialTime, nextAttack;
 	private Trainer actualPlayer;
 	
 	public Battle(int maxWaitTime) {
 		jogador1 = new Trainer("ASH", false);
-		jogador2 = new Trainer("Gary", true);
+		jogador2 = new Trainer("GARY", true);
 		actualPlayer = jogador1;
 		anyAttack = false;
 		this.maxWaitTime = maxWaitTime;
+	}
+	
+	public void setNextAttack(float value){
+		this.nextAttack = value;
 	}
 	
 	public Trainer getTrainer(boolean adversario){
@@ -35,15 +39,13 @@ public class Battle {
 	}
 	
 	public void draw(SpriteBatch batch){
-		getTrainer(true).update();
-		getTrainer(true).draw(batch);
-		getTrainer(false).update();
-		getTrainer(false).draw(batch);
+			getTrainer(true).update();
+			getTrainer(true).draw(batch);
+			getTrainer(false).update();
+			getTrainer(false).draw(batch);
 	}
 	
 	public void match(float delta){
-		//System.out.println("ELAPSED TIME: " + ((initialTime + delta)));
-		//System.out.println("Name: " + jogador2.activePokemon().getName() + " > " + jogador2.activePokemon().getCurrentHP());
 		if (((initialTime + delta)) > maxWaitTime){
 			System.out.println(actualPlayer.getNickname() + " não jogou e, como tal, perdeu!");
 			((Game)Gdx.app.getApplicationListener()).setScreen(new LoadScreen());
@@ -52,13 +54,11 @@ public class Battle {
 			if (anyAttack){
 				initialTime = 0;
 				if (actualPlayer.equals(jogador1)){
-					// GET THE ATTACK MOVE
-					//System.out.println("Atacar Jogador 2");
-					nextMove(jogador2, 20);
+					nextMove(jogador2, nextAttack*1.5 - jogador1.activePokemon().getDefense());
+					tradePlayer();
 				} else {
-					// GET THE ATTACK MOVE
-					System.out.println("Atacar Jogador 1");
-					nextMove(jogador1, 20);
+					nextMove(jogador1, nextAttack*1.5 - jogador2.activePokemon().getDefense());
+					tradePlayer();
 				}
 			}
 		}
@@ -68,11 +68,10 @@ public class Battle {
 	public void nextMove(Trainer to, double damage){
 		to.activePokemon().descreaseActualHP(damage);
 		to.setCurrentHPTextureRegion(new TextureRegion(new Texture("media/img/"+ to.lifeBar(to.activePokemon().getCurrentHP(), to.activePokemon().getHp()))));
-		System.out.println(to.activePokemon().getCurrentHP());
 		if ( to.activePokemon().getCurrentHP() <= 0){
 			if (!to.setCurrentPokemon(to.firstPokemon_not_fainted())){
-				System.out.println("Exiting");
-				Gdx.app.exit();  // TODO: Fim de jogo em condições.
+				System.out.println("Exiting...");
+				Gdx.app.exit();
 			}
 			else {to.setPokemonAtributeNull();
 			}
@@ -94,5 +93,21 @@ public class Battle {
 	public Trainer getJogadorAlvo(){
 		if (jogador1.equals(actualPlayer)) return jogador2;
 		else return jogador1;
+	}
+	
+	public void tradePlayer(){
+		if (jogador1.equals(this.actualPlayer)){
+			jogador1.reverseAdversario();
+			jogador2.reverseAdversario();
+			actualPlayer = jogador2;
+		}else {
+			jogador1.reverseAdversario();
+			jogador2.reverseAdversario();
+			actualPlayer = jogador1;
+		}
+	}
+	
+	public Trainer getActualPlayer(){
+		return this.actualPlayer;
 	}
 }
